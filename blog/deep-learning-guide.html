@@ -1,0 +1,3107 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<title>Your Deep Learning Course — A Beginner's Field Guide</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500;600&amp;family=IBM+Plex+Sans:wght@400;500;600;700&amp;display=swap" rel="stylesheet">
+<style>
+  .blog-nav{position:sticky;top:0;z-index:100;background:rgba(250,249,245,0.92);backdrop-filter:blur(12px);-webkit-backdrop-filter:blur(12px);border-bottom:1px solid #E4E2DB;padding:0 28px;}
+  .blog-nav-inner{max-width:1000px;margin:0 auto;display:flex;align-items:center;justify-content:space-between;height:52px;}
+  .blog-nav a{font-family:'IBM Plex Sans',sans-serif;font-size:13.5px;font-weight:500;color:#1F6F78;text-decoration:none;display:flex;align-items:center;gap:6px;transition:opacity .2s;}
+  .blog-nav a:hover{opacity:0.7;}
+  .blog-nav .site-name{font-weight:700;color:#1B2430;font-size:15px;}
+  .blog-nav .site-name span{color:#1F6F78;}
+  :root{
+    --paper:#FAF9F5; --ink:#1B2430; --sub:#5B6472; --rule:#E4E2DB;
+    --teal:#1F6F78; --teal-tint:#E7F1F0;
+    --amber:#E0954B; --amber-tint:#FBF0E3;
+    --rose:#C1553D; --rose-tint:#F7E9E5;
+    --violet:#6C63A6; --violet-tint:#ECEAF5;
+    --card:#FFFFFF;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{margin:0; background:var(--paper); color:var(--ink); font-family:'IBM Plex Sans',-apple-system,sans-serif; line-height:1.6;}
+  .mono{font-family:'IBM Plex Mono',monospace;}
+  .wrap{max-width:1000px; margin:0 auto; padding:0 28px;}
+
+  header{padding:60px 0 36px; border-bottom:1px solid var(--rule);}
+  .eyebrow{font-family:'IBM Plex Mono',monospace; font-size:12.5px; letter-spacing:.14em; text-transform:uppercase; color:var(--teal); margin:0 0 14px;}
+  h1{font-size:38px; font-weight:700; margin:0 0 16px; letter-spacing:-0.01em;}
+  .lede{font-size:16.5px; color:var(--sub); max-width:680px; margin:0 0 20px;}
+  .source-note{font-size:13px; color:var(--sub); background:var(--teal-tint); border-left:3px solid var(--teal); padding:10px 14px; border-radius:0 6px 6px 0; max-width:680px;}
+
+  .toc{padding:30px 0; border-bottom:1px solid var(--rule);}
+  .toc h2{font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--sub); font-family:'IBM Plex Mono',monospace; font-weight:500; margin:0 0 16px;}
+  .toc-grid{display:grid; grid-template-columns:repeat(2,1fr); gap:6px 32px;}
+  .toc-grid a{display:flex; gap:10px; align-items:baseline; color:var(--ink); text-decoration:none; font-size:14px; padding:5px 0; border-bottom:1px dotted transparent;}
+  .toc-grid a:hover{border-bottom-color:var(--teal); color:var(--teal);}
+  .toc-grid .n{font-family:'IBM Plex Mono',monospace; color:var(--teal); font-size:12.5px; font-weight:600; min-width:20px;}
+
+  .flowsection{padding:36px 0 12px;}
+  .flowsection h2{font-size:13px; text-transform:uppercase; letter-spacing:.12em; color:var(--sub); font-family:'IBM Plex Mono',monospace; font-weight:500; margin:0 0 18px;}
+  .flow-scroll{overflow-x:auto; padding-bottom:14px; margin:0 -28px; padding-left:28px; padding-right:28px;}
+
+  .howto{background:var(--amber-tint); border:1px solid #EEDCC2; border-radius:12px; padding:20px 22px; margin:28px 0;}
+  .howto h3{margin:0 0 8px; font-size:15px; color:var(--ink);}
+  .howto p{margin:0; font-size:14px; color:var(--ink); line-height:1.65;}
+
+  .pipeline{position:relative; padding:16px 0 30px;}
+  .stage{position:relative; display:grid; grid-template-columns:56px 1fr; gap:0; padding:32px 0; border-bottom:1px solid var(--rule);}
+  .stage:last-child{border-bottom:none;}
+  .rail-col{position:relative;}
+  .rail-line{position:absolute; left:27px; top:0; bottom:-32px; width:2px; background:var(--rule);}
+  .stage:last-child .rail-line{display:none;}
+  .node{width:40px; height:40px; border-radius:50%; background:var(--card); border:2px solid var(--teal); color:var(--teal); font-family:'IBM Plex Mono',monospace; font-weight:600; font-size:14px; display:flex; align-items:center; justify-content:center; position:relative; z-index:2;}
+  .node.amber{border-color:var(--amber); color:var(--amber);}
+  .node.rose{border-color:var(--rose); color:var(--rose);}
+  .node.violet{border-color:var(--violet); color:var(--violet);}
+  .stage-content h3{font-size:20px; margin:2px 0 6px; font-weight:700;}
+  .stage-tag{font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.1em; margin:0 0 4px;}
+  .stage-tag.f{color:var(--teal);} .stage-tag.v{color:var(--amber);} .stage-tag.p{color:var(--rose);} .stage-tag.s{color:var(--violet);}
+  .plain{font-size:14.5px; color:var(--ink); margin:0 0 14px; max-width:720px; line-height:1.65;}
+  .plain b{color:var(--ink);}
+
+  .notation{background:var(--violet-tint); border-left:3px solid var(--violet); border-radius:0 8px 8px 0; padding:12px 16px; margin:14px 0 18px; font-size:13.5px;}
+  .notation .label{font-family:'IBM Plex Mono',monospace; font-size:10.5px; text-transform:uppercase; letter-spacing:.08em; color:var(--violet); font-weight:600; margin-bottom:6px; display:block;}
+  .notation code{font-family:'IBM Plex Mono',monospace; background:#fff; padding:1px 5px; border-radius:4px; color:var(--ink); font-weight:600;}
+
+  table{border-collapse:collapse; width:100%; margin:0 0 8px; font-size:13.5px;}
+  thead th{text-align:left; font-family:'IBM Plex Mono',monospace; font-size:11px; text-transform:uppercase; letter-spacing:.08em; color:var(--sub); font-weight:500; padding:8px 14px; border-bottom:1px solid var(--ink);}
+  tbody td{padding:9px 14px; border-bottom:1px solid var(--rule); vertical-align:top;}
+  tbody tr:hover{background:var(--teal-tint);}
+  td.term{font-weight:600; white-space:nowrap;}
+  td.desc{color:var(--sub);}
+
+  .chart-box{margin-top:18px; background:var(--card); border:1px solid var(--rule); border-radius:10px; padding:16px 16px 12px;}
+  .chart-box svg{width:100%; height:auto; display:block;}
+  .caption{font-size:12.5px; color:var(--sub); margin-top:10px; padding-top:10px; border-top:1px dashed var(--rule);}
+  .caption b{color:var(--ink);}
+
+  .glossary-section{padding:40px 0;}
+  .glossary-section h2{font-size:26px; margin:0 0 8px;}
+  .glossary-section .sub-lede{font-size:14.5px; color:var(--sub); margin:0 0 24px; max-width:700px;}
+  .glossary-group{margin-bottom:26px;}
+  .glossary-group h4{font-family:'IBM Plex Mono',monospace; font-size:12px; text-transform:uppercase; letter-spacing:.1em; color:var(--teal); margin:0 0 10px;}
+  .sym-table td.sym{font-family:'IBM Plex Mono',monospace; font-size:15px; font-weight:600; color:var(--rose); white-space:nowrap; width:70px;}
+  .sym-table td.name{font-weight:600; white-space:nowrap;}
+
+  footer{padding:36px 0 70px; color:var(--sub); font-size:13px; border-top:1px solid var(--rule); margin-top:10px;}
+
+  @media (max-width:640px){
+    h1{font-size:28px;}
+    .toc-grid{grid-template-columns:1fr;}
+    .stage{grid-template-columns:40px 1fr;}
+    .node{width:32px;height:32px;font-size:11.5px;}
+    .rail-line{left:21px;}
+  }
+</style>
+</head>
+<body>
+<nav class="blog-nav">
+  <div class="blog-nav-inner">
+    <a href="../index.html" class="site-name">Thanush Raj</a>
+    <a href="../index.html">← Back to home</a>
+  </div>
+</nav>
+<div class="wrap">
+
+  <header>
+    <p class="eyebrow">— your course, simplified —</p>
+    <h1>Deep Learning, From Your Own Lecture Notes</h1>
+    <p class="lede">A beginner-friendly walk through all 16 topics of your FAU Deep Learning course — what each one actually means in plain language, the key methods inside it, and a plain-English glossary for every symbol you'll see in the equations.</p>
+    <p class="source-note">Built from the 16 files you uploaded (Prof. Andreas Maier's FAU LME Deep Learning lecture notes) — every topic below follows your actual course structure, not a generic outline.</p>
+  </header>
+
+  <div class="toc">
+    <h2>Contents</h2>
+    <div class="toc-grid">
+      <a href="#s01"><span class="n mono">01</span> Introduction</a>
+      <a href="#s02"><span class="n mono">02</span> Feedforward Neural Networks</a>
+      <a href="#s03"><span class="n mono">03</span> Loss Functions &amp; Optimization</a>
+      <a href="#s04"><span class="n mono">04</span> Activation Functions &amp; CNNs</a>
+      <a href="#s05"><span class="n mono">05</span> Regularization</a>
+      <a href="#s06"><span class="n mono">06</span> Common Practices</a>
+      <a href="#s07"><span class="n mono">07</span> Architectures</a>
+      <a href="#s08"><span class="n mono">08</span> Recurrent Networks &amp; LSTMs</a>
+      <a href="#s09"><span class="n mono">09</span> Visualization &amp; Attention</a>
+      <a href="#s10"><span class="n mono">10</span> Segmentation &amp; Object Detection</a>
+      <a href="#s11"><span class="n mono">11</span> Deep Reinforcement Learning</a>
+      <a href="#s12"><span class="n mono">12</span> Unsupervised Learning</a>
+      <a href="#s13"><span class="n mono">13</span> Weakly-Supervised Learning</a>
+      <a href="#s14"><span class="n mono">14</span> Self-Supervised Learning</a>
+      <a href="#s15"><span class="n mono">15</span> Graph Deep Learning</a>
+      <a href="#s16"><span class="n mono">16</span> Known Operator Learning</a>
+      <a href="#glossary"><span class="n mono">§</span> Equation Symbol Glossary</a>
+    </div>
+  </div>
+
+  <div class="flowsection">
+    <h2>Your course at a glance</h2>
+    <div class="flow-scroll">
+<svg viewBox="0 0 2472 175" xmlns="http://www.w3.org/2000/svg" font-family="IBM Plex Sans, sans-serif">
+<rect x="12" y="16" width="908" height="104" rx="14" fill="#E7F1F0" opacity="0.55"/>
+<text x="22" y="32" font-size="11" letter-spacing="1.5" font-weight="600" fill="#1F6F78" font-family="IBM Plex Mono, monospace">FOUNDATIONS</text>
+<rect x="936" y="16" width="600" height="104" rx="14" fill="#FBF0E3" opacity="0.55"/>
+<text x="946" y="32" font-size="11" letter-spacing="1.5" font-weight="600" fill="#B9701E" font-family="IBM Plex Mono, monospace">VISION &amp; SEQUENCE</text>
+<rect x="1552" y="16" width="600" height="104" rx="14" fill="#F7E9E5" opacity="0.55"/>
+<text x="1562" y="32" font-size="11" letter-spacing="1.5" font-weight="600" fill="#C1553D" font-family="IBM Plex Mono, monospace">LEARNING PARADIGMS</text>
+<rect x="2168" y="16" width="292" height="104" rx="14" fill="#ECEAF5" opacity="0.55"/>
+<text x="2178" y="32" font-size="11" letter-spacing="1.5" font-weight="600" fill="#6C63A6" font-family="IBM Plex Mono, monospace">SPECIALIZED TOPICS</text>
+<rect x="20" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="32" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">01</text>
+<text x="32" y="86" font-size="11.5" fill="#1B2430">Introduction</text>
+<line x1="144" y1="83.0" x2="168" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="168,79.0 174,83.0 168,87.0" fill="#B7B2A6"/>
+<rect x="174" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="186" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">02</text>
+<text x="186" y="86" font-size="11.5" fill="#1B2430">Feedforward</text>
+<text x="186" y="101" font-size="11.5" fill="#1B2430">Networks</text>
+<line x1="298" y1="83.0" x2="322" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="322,79.0 328,83.0 322,87.0" fill="#B7B2A6"/>
+<rect x="328" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="340" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">03</text>
+<text x="340" y="86" font-size="11.5" fill="#1B2430">Loss &amp;</text>
+<text x="340" y="101" font-size="11.5" fill="#1B2430">Optimization</text>
+<line x1="452" y1="83.0" x2="476" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="476,79.0 482,83.0 476,87.0" fill="#B7B2A6"/>
+<rect x="482" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="494" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">04</text>
+<text x="494" y="86" font-size="11.5" fill="#1B2430">Activations</text>
+<text x="494" y="101" font-size="11.5" fill="#1B2430">&amp; CNNs</text>
+<line x1="606" y1="83.0" x2="630" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="630,79.0 636,83.0 630,87.0" fill="#B7B2A6"/>
+<rect x="636" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="648" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">05</text>
+<text x="648" y="86" font-size="11.5" fill="#1B2430">Regular-</text>
+<text x="648" y="101" font-size="11.5" fill="#1B2430">ization</text>
+<line x1="760" y1="83.0" x2="784" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="784,79.0 790,83.0 784,87.0" fill="#B7B2A6"/>
+<rect x="790" y="44" width="122" height="78" rx="10" fill="white" stroke="#1F6F78" stroke-width="1.6"/>
+<text x="802" y="66" font-size="13" font-weight="700" fill="#1F6F78" font-family="IBM Plex Mono, monospace">06</text>
+<text x="802" y="86" font-size="11.5" fill="#1B2430">Common</text>
+<text x="802" y="101" font-size="11.5" fill="#1B2430">Practices</text>
+<line x1="914" y1="83.0" x2="938" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="938,79.0 944,83.0 938,87.0" fill="#B7B2A6"/>
+<rect x="944" y="44" width="122" height="78" rx="10" fill="white" stroke="#E0954B" stroke-width="1.6"/>
+<text x="956" y="66" font-size="13" font-weight="700" fill="#E0954B" font-family="IBM Plex Mono, monospace">07</text>
+<text x="956" y="86" font-size="11.5" fill="#1B2430">Architectures</text>
+<line x1="1068" y1="83.0" x2="1092" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1092,79.0 1098,83.0 1092,87.0" fill="#B7B2A6"/>
+<rect x="1098" y="44" width="122" height="78" rx="10" fill="white" stroke="#E0954B" stroke-width="1.6"/>
+<text x="1110" y="66" font-size="13" font-weight="700" fill="#E0954B" font-family="IBM Plex Mono, monospace">08</text>
+<text x="1110" y="86" font-size="11.5" fill="#1B2430">RNNs &amp;</text>
+<text x="1110" y="101" font-size="11.5" fill="#1B2430">LSTMs</text>
+<line x1="1222" y1="83.0" x2="1246" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1246,79.0 1252,83.0 1246,87.0" fill="#B7B2A6"/>
+<rect x="1252" y="44" width="122" height="78" rx="10" fill="white" stroke="#E0954B" stroke-width="1.6"/>
+<text x="1264" y="66" font-size="13" font-weight="700" fill="#E0954B" font-family="IBM Plex Mono, monospace">09</text>
+<text x="1264" y="86" font-size="11.5" fill="#1B2430">Attention &amp;</text>
+<text x="1264" y="101" font-size="11.5" fill="#1B2430">Transformers</text>
+<line x1="1376" y1="83.0" x2="1400" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1400,79.0 1406,83.0 1400,87.0" fill="#B7B2A6"/>
+<rect x="1406" y="44" width="122" height="78" rx="10" fill="white" stroke="#E0954B" stroke-width="1.6"/>
+<text x="1418" y="66" font-size="13" font-weight="700" fill="#E0954B" font-family="IBM Plex Mono, monospace">10</text>
+<text x="1418" y="86" font-size="11.5" fill="#1B2430">Segmentation</text>
+<text x="1418" y="101" font-size="11.5" fill="#1B2430">&amp; Detection</text>
+<line x1="1530" y1="83.0" x2="1554" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1554,79.0 1560,83.0 1554,87.0" fill="#B7B2A6"/>
+<rect x="1560" y="44" width="122" height="78" rx="10" fill="white" stroke="#C1553D" stroke-width="1.6"/>
+<text x="1572" y="66" font-size="13" font-weight="700" fill="#C1553D" font-family="IBM Plex Mono, monospace">11</text>
+<text x="1572" y="86" font-size="11.5" fill="#1B2430">Reinforcement</text>
+<text x="1572" y="101" font-size="11.5" fill="#1B2430">Learning</text>
+<line x1="1684" y1="83.0" x2="1708" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1708,79.0 1714,83.0 1708,87.0" fill="#B7B2A6"/>
+<rect x="1714" y="44" width="122" height="78" rx="10" fill="white" stroke="#C1553D" stroke-width="1.6"/>
+<text x="1726" y="66" font-size="13" font-weight="700" fill="#C1553D" font-family="IBM Plex Mono, monospace">12</text>
+<text x="1726" y="86" font-size="11.5" fill="#1B2430">Unsupervised</text>
+<text x="1726" y="101" font-size="11.5" fill="#1B2430">(AE/VAE/GAN)</text>
+<line x1="1838" y1="83.0" x2="1862" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="1862,79.0 1868,83.0 1862,87.0" fill="#B7B2A6"/>
+<rect x="1868" y="44" width="122" height="78" rx="10" fill="white" stroke="#C1553D" stroke-width="1.6"/>
+<text x="1880" y="66" font-size="13" font-weight="700" fill="#C1553D" font-family="IBM Plex Mono, monospace">13</text>
+<text x="1880" y="86" font-size="11.5" fill="#1B2430">Weakly-Sup.</text>
+<text x="1880" y="101" font-size="11.5" fill="#1B2430">Learning</text>
+<line x1="1992" y1="83.0" x2="2016" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="2016,79.0 2022,83.0 2016,87.0" fill="#B7B2A6"/>
+<rect x="2022" y="44" width="122" height="78" rx="10" fill="white" stroke="#C1553D" stroke-width="1.6"/>
+<text x="2034" y="66" font-size="13" font-weight="700" fill="#C1553D" font-family="IBM Plex Mono, monospace">14</text>
+<text x="2034" y="86" font-size="11.5" fill="#1B2430">Self-Sup.</text>
+<text x="2034" y="101" font-size="11.5" fill="#1B2430">Learning</text>
+<line x1="2146" y1="83.0" x2="2170" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="2170,79.0 2176,83.0 2170,87.0" fill="#B7B2A6"/>
+<rect x="2176" y="44" width="122" height="78" rx="10" fill="white" stroke="#6C63A6" stroke-width="1.6"/>
+<text x="2188" y="66" font-size="13" font-weight="700" fill="#6C63A6" font-family="IBM Plex Mono, monospace">15</text>
+<text x="2188" y="86" font-size="11.5" fill="#1B2430">Graph Deep</text>
+<text x="2188" y="101" font-size="11.5" fill="#1B2430">Learning</text>
+<line x1="2300" y1="83.0" x2="2324" y2="83.0" stroke="#B7B2A6" stroke-width="1.6"/>
+<polygon points="2324,79.0 2330,83.0 2324,87.0" fill="#B7B2A6"/>
+<rect x="2330" y="44" width="122" height="78" rx="10" fill="white" stroke="#6C63A6" stroke-width="1.6"/>
+<text x="2342" y="66" font-size="13" font-weight="700" fill="#6C63A6" font-family="IBM Plex Mono, monospace">16</text>
+<text x="2342" y="86" font-size="11.5" fill="#1B2430">Known Operator</text>
+<text x="2342" y="101" font-size="11.5" fill="#1B2430">Learning</text>
+</svg>
+    </div>
+  </div>
+
+  <div class="howto">
+    <h3>How to use this guide</h3>
+    <p>Each topic below has three parts: a <b>plain-language explanation</b> (no derivations), a <b>notation box</b> translating any symbols into words, and a <b>table</b> of the specific methods your lecture covers. Skimming the notation boxes alone, in order, will get you 80% of the way to reading any equation in your slides without panic.</p>
+  </div>
+
+  <div class="pipeline">
+
+    <!-- 01 -->
+    <div class="stage" id="s01">
+      <div class="rail-col"><div class="node">01</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Introduction</h3>
+        <p class="plain">Deep learning is machine learning using neural networks with many layers. The key shift from older methods: instead of a person hand-designing "features" (edges, shapes, keywords), the network <b>learns</b> what features matter directly from raw data. This became practical around 2012, when a network called AlexNet nearly halved the error rate on ImageNet (a 14-million-image benchmark) — the moment that convinced the field deep networks actually work at scale.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Neural network</td><td class="desc">A stack of simple math units, loosely inspired by neurons, that together can approximate very complex functions.</td></tr>
+            <tr><td class="term">Feature learning</td><td class="desc">The network figures out on its own which patterns in the data are useful, instead of being told.</td></tr>
+            <tr><td class="term">Supervised / unsupervised</td><td class="desc">Supervised = you have labels (correct answers) to learn from. Unsupervised = you don't, and the model finds structure by itself.</td></tr>
+            <tr><td class="term">ImageNet / ILSVRC</td><td class="desc">The famous 1000-class, 14-million-image benchmark that became deep learning's proving ground.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 02 -->
+    <div class="stage" id="s02">
+      <div class="rail-col"><div class="node">02</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Feedforward Neural Networks</h3>
+        <p class="plain">The smallest building block is a <b>perceptron</b>: it multiplies each input by a weight, adds them up, and fires "yes" or "no" depending on the sign of the result. A single perceptron can only draw a straight-line boundary, so it famously can't solve the XOR problem (data arranged so no single line separates the classes) — this failure nearly ended AI research funding in the 1970s ("the AI winter"). The fix: stack perceptrons into layers — a <b>Multi-Layer Perceptron</b> — which can bend that boundary into any shape. <b>Backpropagation</b> is simply the bookkeeping trick that computes, layer by layer working backward from the error, exactly how much to nudge every single weight.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>x</code> = input &nbsp; <code>w</code> = weight &nbsp; <code>b</code> = bias (an extra learnable offset) &nbsp; <code>ŷ</code> ("y-hat") = the network's prediction &nbsp; <code>η</code> (eta) = learning rate, the size of each update step &nbsp; <code>∇</code> (nabla) = gradient, the direction that increases the loss fastest — you step opposite to it
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Perceptron</td><td class="desc">Weighted sum of inputs → sign decides the class. The simplest possible "neuron."</td></tr>
+            <tr><td class="term">XOR problem</td><td class="desc">A dataset no single straight line can separate — proof one perceptron isn't enough.</td></tr>
+            <tr><td class="term">Multi-Layer Perceptron (MLP)</td><td class="desc">Perceptrons stacked in layers, which can now bend decision boundaries into curves.</td></tr>
+            <tr><td class="term">Universal Approximation Theorem</td><td class="desc">One hidden layer, if wide enough, can approximate almost any function — a guarantee of existence, not a recipe.</td></tr>
+            <tr><td class="term">Backpropagation</td><td class="desc">The chain-rule bookkeeping that computes every weight's update by working backward from the loss.</td></tr>
+            <tr><td class="term">Vanishing / exploding gradient</td><td class="desc">Multiplying many small (or large) numbers during backprop makes updates shrink to ~0 (or blow up) in deep networks.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 03 -->
+    <div class="stage" id="s03">
+      <div class="rail-col"><div class="node">03</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Loss Functions &amp; Optimization</h3>
+        <p class="plain">The <b>loss</b> is one number that says "how wrong is the network right now." Different tasks need differently-shaped losses: regression (predicting a number) typically uses squared error; classification (predicting a category) uses cross-entropy. Both actually come from the same idea — <b>Maximum Likelihood Estimation</b>: pick the loss that makes your training data the most probable outcome under some assumed noise model (Gaussian for regression, categorical for classification). Once you have a loss, <b>optimization</b> is the family of algorithms that nudge the weights to shrink it — from plain gradient descent up to modern methods like Adam that give every weight its own adaptive step size.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>L(w)</code> = the loss, written as a function of the weights &nbsp; <code>p(y|x)</code> = "probability of label y given input x" &nbsp; <code>argmin / argmax</code> = "the value that makes this smallest / largest" &nbsp; <code>μ</code> (mu) = momentum coefficient (typically 0.9) &nbsp; <code>ρ</code> (rho) = decay rate in RMSProp/Adadelta &nbsp; <code>β</code> (beta) = precision (1/variance) in the Gaussian derivation
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">L2 / MSE loss</td><td class="desc">Squared difference between prediction and target — the natural loss for regression.</td></tr>
+            <tr><td class="term">Cross-entropy loss</td><td class="desc">The natural loss for classification — directly tied to how "surprised" the model is by the true label.</td></tr>
+            <tr><td class="term">Hinge loss</td><td class="desc">Used with SVM-style classifiers; only penalizes points that are wrong or too close to the boundary.</td></tr>
+            <tr><td class="term">Subgradient</td><td class="desc">A stand-in for the gradient at "kinks" (like ReLU's corner at 0) where no single slope exists.</td></tr>
+            <tr><td class="term">Batch / stochastic / mini-batch GD</td><td class="desc">Use all data / one sample / a small random subset to estimate the gradient at each step.</td></tr>
+            <tr><td class="term">Momentum / Nesterov</td><td class="desc">Keep a running average of past gradient directions so you don't zig-zag as much.</td></tr>
+            <tr><td class="term">AdaGrad / RMSProp / Adam</td><td class="desc">Give each individual weight its own adaptive learning rate based on its gradient history.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 04 -->
+    <div class="stage" id="s04">
+      <div class="rail-col"><div class="node">04</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Activation Functions &amp; CNNs</h3>
+        <p class="plain">The <b>activation function</b> is the small non-linear decision every neuron applies after summing its inputs — without it, stacking 100 layers is mathematically identical to stacking one. Early choices (sigmoid, tanh) squash values into a narrow range and "saturate," which is what causes vanishing gradients; <b>ReLU</b> (just "zero if negative, otherwise keep the value") fixed this and enabled truly deep networks. For images specifically, <b>Convolutional Neural Networks</b> exploit the fact that nearby pixels are related: instead of connecting every pixel to every neuron, a small filter (e.g. 3×3) slides across the whole image reusing the same weights everywhere — this is what "convolution" means here.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>f(x)</code> = the activation function &nbsp; <code>f′(x)</code> = its derivative (needed for backprop) &nbsp; <code>σ</code> (sigma) = the sigmoid function &nbsp; <code>max(0,x)</code> = ReLU, in words: "zero, or x, whichever is bigger" &nbsp; <code>α</code> (alpha) = the small slope given to negative inputs in Leaky ReLU
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Sigmoid / tanh</td><td class="desc">S-shaped curves squashing output to (0,1) or (−1,1); both saturate and cause vanishing gradients.</td></tr>
+            <tr><td class="term">ReLU</td><td class="desc">max(0, x) — fast, avoids vanishing gradients for positive inputs, the modern default.</td></tr>
+            <tr><td class="term">Dying ReLU</td><td class="desc">A neuron stuck always outputting 0, so it can never update again.</td></tr>
+            <tr><td class="term">Leaky / Parametric ReLU, ELU</td><td class="desc">Variants that give negative inputs a small non-zero slope, avoiding the "dying" problem.</td></tr>
+            <tr><td class="term">Convolution / filter / kernel</td><td class="desc">A small weight grid slid across the whole image, reused at every position ("weight sharing").</td></tr>
+            <tr><td class="term">Padding / stride / dilation</td><td class="desc">Controls for output size, step size between filter positions, and spacing within the filter.</td></tr>
+            <tr><td class="term">1×1 convolution</td><td class="desc">Mathematically a fully-connected layer applied per-pixel — used to compress channels cheaply.</td></tr>
+            <tr><td class="term">Pooling (max/average)</td><td class="desc">Shrinks feature maps by summarizing small neighborhoods to one value.</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="820.820859pt" height="265.106979pt" viewBox="0 0 820.820859 265.106979" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-04T02:03:32.242528</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 265.106979 
+L 820.820859 265.106979 
+L 820.820859 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 26.730859 242.680572 
+L 414.775859 242.680572 
+L 414.775859 25.894012 
+L 26.730859 25.894012 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 44.369268 242.680572 
+L 44.369268 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="mdd4189ad49" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5b6472; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mdd4189ad49" x="44.369268" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="44.369268" y="256.139244" transform="rotate(-0 44.369268 256.139244)">−4</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 88.465291 242.680572 
+L 88.465291 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="88.465291" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="88.465291" y="256.139244" transform="rotate(-0 88.465291 256.139244)">−3</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 132.561314 242.680572 
+L 132.561314 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="132.561314" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="132.561314" y="256.139244" transform="rotate(-0 132.561314 256.139244)">−2</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 176.657337 242.680572 
+L 176.657337 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="176.657337" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="176.657337" y="256.139244" transform="rotate(-0 176.657337 256.139244)">−1</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 220.753359 242.680572 
+L 220.753359 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="220.753359" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="220.753359" y="256.139244" transform="rotate(-0 220.753359 256.139244)">0</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 264.849382 242.680572 
+L 264.849382 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="264.849382" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="264.849382" y="256.139244" transform="rotate(-0 264.849382 256.139244)">1</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 308.945405 242.680572 
+L 308.945405 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="308.945405" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="308.945405" y="256.139244" transform="rotate(-0 308.945405 256.139244)">2</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15">
+      <path d="M 353.041428 242.680572 
+L 353.041428 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="353.041428" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="353.041428" y="256.139244" transform="rotate(-0 353.041428 256.139244)">3</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_17">
+      <path d="M 397.13745 242.680572 
+L 397.13745 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#mdd4189ad49" x="397.13745" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="397.13745" y="256.139244" transform="rotate(-0 397.13745 256.139244)">4</text>
+     </g>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_19">
+      <path d="M 26.730859 242.680572 
+L 414.775859 242.680572 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <defs>
+       <path id="m719aeda9d6" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5b6472; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="242.680572" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="245.909908" transform="rotate(-0 19.730859 245.909908)">−2</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_21">
+      <path d="M 26.730859 206.549479 
+L 414.775859 206.549479 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="206.549479" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="209.778815" transform="rotate(-0 19.730859 209.778815)">−1</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_23">
+      <path d="M 26.730859 170.418386 
+L 414.775859 170.418386 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="170.418386" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="173.647722" transform="rotate(-0 19.730859 173.647722)">0</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_25">
+      <path d="M 26.730859 134.287292 
+L 414.775859 134.287292 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="134.287292" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="137.516628" transform="rotate(-0 19.730859 137.516628)">1</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_27">
+      <path d="M 26.730859 98.156199 
+L 414.775859 98.156199 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="98.156199" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="101.385535" transform="rotate(-0 19.730859 101.385535)">2</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_29">
+      <path d="M 26.730859 62.025106 
+L 414.775859 62.025106 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="62.025106" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="65.254442" transform="rotate(-0 19.730859 65.254442)">3</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_31">
+      <path d="M 26.730859 25.894012 
+L 414.775859 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#m719aeda9d6" x="26.730859" y="25.894012" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="19.730859" y="29.123348" transform="rotate(-0 19.730859 29.123348)">4</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_33">
+    <path d="M 44.369268 169.768524 
+L 67.965802 169.322598 
+L 86.843029 168.763898 
+L 103.360603 168.061172 
+L 117.518524 167.247058 
+L 130.496617 166.285935 
+L 142.294884 165.201272 
+L 154.093151 163.889998 
+L 165.891418 162.33532 
+L 177.689685 160.534032 
+L 189.487952 158.501875 
+L 203.645872 155.81389 
+L 226.06258 151.266593 
+L 244.939807 147.518992 
+L 257.9179 145.160708 
+L 269.716167 143.240661 
+L 281.514434 141.562007 
+L 293.312701 140.130417 
+L 305.110968 138.935172 
+L 316.909235 137.954816 
+L 329.887329 137.092346 
+L 344.045249 136.366327 
+L 360.562823 135.742957 
+L 380.619877 135.224778 
+L 397.13745 134.937154 
+L 397.13745 134.937154 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #1f6f78; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_34">
+    <path d="M 44.369268 206.525246 
+L 89.202683 206.364741 
+L 109.259737 206.092401 
+L 123.417657 205.685702 
+L 134.036097 205.161572 
+L 142.294884 204.548393 
+L 149.373844 203.8194 
+L 155.272978 203.022768 
+L 161.172111 202.008859 
+L 165.891418 201.008207 
+L 170.610725 199.808982 
+L 175.330032 198.381994 
+L 180.049338 196.698328 
+L 184.768645 194.731582 
+L 189.487952 192.46082 
+L 194.207259 189.87411 
+L 198.926566 186.972303 
+L 203.645872 183.772442 
+L 208.365179 180.310052 
+L 214.264313 175.697286 
+L 234.321366 159.639171 
+L 239.040673 156.238037 
+L 243.75998 153.110105 
+L 248.479287 150.286157 
+L 253.198593 147.778918 
+L 257.9179 145.585694 
+L 262.637207 143.691951 
+L 267.356514 142.075073 
+L 272.075821 140.707781 
+L 276.795127 139.560907 
+L 282.694261 138.393246 
+L 288.593394 137.471833 
+L 295.672355 136.625569 
+L 302.751315 135.998621 
+L 312.189928 135.411927 
+L 322.808368 134.986239 
+L 336.966289 134.656747 
+L 357.023343 134.436507 
+L 391.238317 134.318956 
+L 397.13745 134.311526 
+L 397.13745 134.311526 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e0954b; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_35">
+    <path d="M 44.369268 170.418386 
+L 220.163446 170.418386 
+L 221.343273 169.935027 
+L 397.13745 25.894012 
+L 397.13745 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #c1553d; stroke-width: 2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_36">
+    <path d="M 44.369268 184.870823 
+L 220.163446 170.466722 
+L 221.343273 169.935027 
+L 397.13745 25.894012 
+L 397.13745 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #6c63a6; stroke-width: 1.6"/>
+   </g>
+   <g id="line2d_37">
+    <path d="M 26.730859 170.418386 
+L 414.775859 170.418386 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_38">
+    <path d="M 220.753359 242.680572 
+L 220.753359 25.894012 
+" clip-path="url(#p436068c090)" style="fill: none; stroke: #e4e2db; stroke-linecap: square"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 26.730859 242.680572 
+L 26.730859 25.894012 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 414.775859 242.680572 
+L 414.775859 25.894012 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 26.730859 242.680572 
+L 414.775859 242.680572 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 26.730859 25.894012 
+L 414.775859 25.894012 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="220.753359" y="19.894012" transform="rotate(-0 220.753359 19.894012)">Activation functions f(x)</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_39">
+     <path d="M 33.930859 36.372762 
+L 41.930859 36.372762 
+L 49.930859 36.372762 
+" style="fill: none; stroke: #1f6f78; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="text_18">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="56.330859" y="39.172762" transform="rotate(-0 56.330859 39.172762)">sigmoid</text>
+    </g>
+    <g id="line2d_40">
+     <path d="M 33.930859 48.115262 
+L 41.930859 48.115262 
+L 49.930859 48.115262 
+" style="fill: none; stroke: #e0954b; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="56.330859" y="50.915262" transform="rotate(-0 56.330859 50.915262)">tanh</text>
+    </g>
+    <g id="line2d_41">
+     <path d="M 33.930859 59.857762 
+L 41.930859 59.857762 
+L 49.930859 59.857762 
+" style="fill: none; stroke: #c1553d; stroke-width: 2; stroke-linecap: square"/>
+    </g>
+    <g id="text_20">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="56.330859" y="62.657762" transform="rotate(-0 56.330859 62.657762)">ReLU</text>
+    </g>
+    <g id="line2d_42">
+     <path d="M 33.930859 71.600262 
+L 41.930859 71.600262 
+L 49.930859 71.600262 
+" style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #6c63a6; stroke-width: 1.6"/>
+    </g>
+    <g id="text_21">
+     <text style="font-size: 8px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="56.330859" y="74.400262" transform="rotate(-0 56.330859 74.400262)">leaky ReLU</text>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_7">
+    <path d="M 444.978109 224.615026 
+L 472.141259 224.615026 
+L 472.141259 199.32326 
+L 444.978109 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 472.141259 224.615026 
+L 499.304409 224.615026 
+L 499.304409 199.32326 
+L 472.141259 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 499.304409 224.615026 
+L 526.467559 224.615026 
+L 526.467559 199.32326 
+L 499.304409 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 526.467559 224.615026 
+L 553.630709 224.615026 
+L 553.630709 199.32326 
+L 526.467559 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 553.630709 224.615026 
+L 580.793859 224.615026 
+L 580.793859 199.32326 
+L 553.630709 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 444.978109 199.32326 
+L 472.141259 199.32326 
+L 472.141259 174.031495 
+L 444.978109 174.031495 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 472.141259 199.32326 
+L 499.304409 199.32326 
+L 499.304409 174.031495 
+L 472.141259 174.031495 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 499.304409 199.32326 
+L 526.467559 199.32326 
+L 526.467559 174.031495 
+L 499.304409 174.031495 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 526.467559 199.32326 
+L 553.630709 199.32326 
+L 553.630709 174.031495 
+L 526.467559 174.031495 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 553.630709 199.32326 
+L 580.793859 199.32326 
+L 580.793859 174.031495 
+L 553.630709 174.031495 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 444.978109 174.031495 
+L 472.141259 174.031495 
+L 472.141259 148.73973 
+L 444.978109 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 472.141259 174.031495 
+L 499.304409 174.031495 
+L 499.304409 148.73973 
+L 472.141259 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 499.304409 174.031495 
+L 526.467559 174.031495 
+L 526.467559 148.73973 
+L 499.304409 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_20">
+    <path d="M 526.467559 174.031495 
+L 553.630709 174.031495 
+L 553.630709 148.73973 
+L 526.467559 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_21">
+    <path d="M 553.630709 174.031495 
+L 580.793859 174.031495 
+L 580.793859 148.73973 
+L 553.630709 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_22">
+    <path d="M 444.978109 148.73973 
+L 472.141259 148.73973 
+L 472.141259 123.447964 
+L 444.978109 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_23">
+    <path d="M 472.141259 148.73973 
+L 499.304409 148.73973 
+L 499.304409 123.447964 
+L 472.141259 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_24">
+    <path d="M 499.304409 148.73973 
+L 526.467559 148.73973 
+L 526.467559 123.447964 
+L 499.304409 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_25">
+    <path d="M 526.467559 148.73973 
+L 553.630709 148.73973 
+L 553.630709 123.447964 
+L 526.467559 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #dce9e8; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_26">
+    <path d="M 553.630709 148.73973 
+L 580.793859 148.73973 
+L 580.793859 123.447964 
+L 553.630709 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_27">
+    <path d="M 444.978109 123.447964 
+L 472.141259 123.447964 
+L 472.141259 98.156199 
+L 444.978109 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_28">
+    <path d="M 472.141259 123.447964 
+L 499.304409 123.447964 
+L 499.304409 98.156199 
+L 472.141259 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_29">
+    <path d="M 499.304409 123.447964 
+L 526.467559 123.447964 
+L 526.467559 98.156199 
+L 499.304409 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_30">
+    <path d="M 526.467559 123.447964 
+L 553.630709 123.447964 
+L 553.630709 98.156199 
+L 526.467559 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_31">
+    <path d="M 553.630709 123.447964 
+L 580.793859 123.447964 
+L 580.793859 98.156199 
+L 553.630709 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #f4f3ef; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_32">
+    <path d="M 472.141259 199.32326 
+L 553.630709 199.32326 
+L 553.630709 123.447964 
+L 472.141259 123.447964 
+L 472.141259 199.32326 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: none; stroke: #1f6f78; stroke-width: 2.5; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_33">
+    <path d="M 681.685559 174.031495 
+L 708.848709 174.031495 
+L 708.848709 148.73973 
+L 681.685559 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_34">
+    <path d="M 708.848709 174.031495 
+L 736.011859 174.031495 
+L 736.011859 148.73973 
+L 708.848709 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_35">
+    <path d="M 736.011859 174.031495 
+L 763.175009 174.031495 
+L 763.175009 148.73973 
+L 736.011859 148.73973 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_36">
+    <path d="M 681.685559 148.73973 
+L 708.848709 148.73973 
+L 708.848709 123.447964 
+L 681.685559 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_37">
+    <path d="M 708.848709 148.73973 
+L 736.011859 148.73973 
+L 736.011859 123.447964 
+L 708.848709 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #1f6f78; opacity: 0.85; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_38">
+    <path d="M 736.011859 148.73973 
+L 763.175009 148.73973 
+L 763.175009 123.447964 
+L 736.011859 123.447964 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_39">
+    <path d="M 681.685559 123.447964 
+L 708.848709 123.447964 
+L 708.848709 98.156199 
+L 681.685559 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_40">
+    <path d="M 708.848709 123.447964 
+L 736.011859 123.447964 
+L 736.011859 98.156199 
+L 708.848709 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_41">
+    <path d="M 736.011859 123.447964 
+L 763.175009 123.447964 
+L 763.175009 98.156199 
+L 736.011859 98.156199 
+z
+" clip-path="url(#pcdd5be44c3)" style="fill: #eff6f5; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="512.885984" y="87.316871" transform="rotate(-0 512.885984 87.316871)">Input feature map</text>
+   </g>
+   <g id="patch_42">
+    <path d="M 609.954077 134.287292 
+Q 638.999719 134.287292 666.0329 134.287292 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.8; stroke-linecap: round"/>
+    <path d="M 662.0329 132.287292 
+L 666.0329 134.287292 
+L 662.0329 136.287292 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.8; stroke-linecap: round"/>
+   </g>
+   <g id="text_23">
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #5b6472" transform="translate(619.983109 112.68316)">3×3 filter</text>
+    <text style="font-size: 8px; font-family: 'DejaVu Sans'; fill: #5b6472" transform="translate(613.518734 121.64141)">slides across</text>
+   </g>
+   <g id="text_24">
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(689.997433 76.678949)">Output (one</text>
+    <text style="font-weight: 700; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(687.341144 87.316871)">feature map)</text>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="619.598359" y="15.558281" transform="rotate(-0 619.598359 15.558281)">Convolution: same filter, every position</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p436068c090">
+   <rect x="26.730859" y="25.894012" width="388.045" height="216.78656"/>
+  </clipPath>
+  <clipPath id="pcdd5be44c3">
+   <rect x="425.575859" y="25.894012" width="388.045" height="216.78656"/>
+  </clipPath>
+ </defs>
+</svg>
+          <p class="caption"><b>Left:</b> the activation shapes your course compares — notice how sigmoid and tanh flatten out ("saturate") at the extremes, while ReLU stays a straight, unsaturated line for any positive input. <b>Right:</b> what "convolution" physically means — the same small filter window slides across the input, producing one output value per position.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 05 -->
+    <div class="stage" id="s05">
+      <div class="rail-col"><div class="node">05</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Regularization</h3>
+        <p class="plain">A model can fail in two opposite ways: <b>underfitting</b> (too simple, misses real patterns — "high bias") or <b>overfitting</b> (memorizes noise in the training data instead of learning general patterns — "high variance"). Regularization is any technique that deliberately holds a model back from perfectly fitting its training data, trading a little training accuracy for much better performance on new, unseen data. The simplest version is just watching a validation loss curve and stopping the moment it starts creeping back up (<b>early stopping</b>).</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>bias² + variance + irreducible error</code> = the three-way split of total expected error &nbsp; <code>λ</code> (lambda) = strength of a regularization penalty &nbsp; <code>p(w)</code> = your prior belief about what weights should look like (e.g. "probably small") &nbsp; <code>MAP</code> = Maximum A Posteriori, i.e. loss + penalty framed as a probability statement
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Bias–variance tradeoff</td><td class="desc">Simplifying a model reduces variance but raises bias, and vice versa — you can't minimize both freely.</td></tr>
+            <tr><td class="term">Model capacity / VC dimension</td><td class="desc">A formal way to measure "how many different patterns can this model possibly represent."</td></tr>
+            <tr><td class="term">Early stopping</td><td class="desc">Halt training right when validation loss stops improving, before it starts rising again.</td></tr>
+            <tr><td class="term">Data augmentation</td><td class="desc">Artificially create more training examples via label-preserving transforms (crop, flip, rotate, jitter).</td></tr>
+            <tr><td class="term">L2 regularization / weight decay</td><td class="desc">Add a penalty for large weights to the loss — encourages simpler, smaller-weight solutions.</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="820.8pt" height="264.335pt" viewBox="0 0 820.8 264.335" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-04T02:03:32.554499</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 264.335 
+L 820.8 264.335 
+L 820.8 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 118.227404 92.593018 
+C 137.857278 92.593018 156.685807 86.835581 170.566224 76.588716 
+C 184.446641 66.341851 192.245673 52.442169 192.245673 37.950913 
+C 192.245673 23.459657 184.446641 9.559975 170.566224 -0.68689 
+C 156.685807 -10.933756 137.857278 -16.691192 118.227404 -16.691192 
+C 98.597529 -16.691192 79.769001 -10.933756 65.888584 -0.68689 
+C 52.008166 9.559975 44.209135 23.459657 44.209135 37.950913 
+C 44.209135 52.442169 52.008166 66.341851 65.888584 76.588716 
+C 79.769001 86.835581 98.597529 92.593018 118.227404 92.593018 
+L 118.227404 92.593018 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 118.227404 72.92186 
+C 130.790523 72.92186 142.840782 69.237101 151.724249 62.679107 
+C 160.607716 56.121113 165.599096 47.225316 165.599096 37.950913 
+C 165.599096 28.676509 160.607716 19.780713 151.724249 13.222719 
+C 142.840782 6.664725 130.790523 2.979965 118.227404 2.979965 
+C 105.664284 2.979965 93.614026 6.664725 84.730559 13.222719 
+C 75.847092 19.780713 70.855712 28.676509 70.855712 37.950913 
+C 70.855712 47.225316 75.847092 56.121113 84.730559 62.679107 
+C 93.614026 69.237101 105.664284 72.92186 118.227404 72.92186 
+L 118.227404 72.92186 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 118.227404 53.250702 
+C 123.723769 53.250702 128.995757 51.63862 132.882273 48.769498 
+C 136.76879 45.900375 138.952519 42.008464 138.952519 37.950913 
+C 138.952519 33.893361 136.76879 30.00145 132.882273 27.132328 
+C 128.995757 24.263206 123.723769 22.651123 118.227404 22.651123 
+C 112.731039 22.651123 107.459051 24.263206 103.572534 27.132328 
+C 99.686017 30.00145 97.502288 33.893361 97.502288 37.950913 
+C 97.502288 42.008464 99.686017 45.900375 103.572534 48.769498 
+C 107.459051 51.63862 112.731039 53.250702 118.227404 53.250702 
+L 118.227404 53.250702 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 288.469423 92.593018 
+C 308.099298 92.593018 326.927826 86.835581 340.808243 76.588716 
+C 354.688661 66.341851 362.487692 52.442169 362.487692 37.950913 
+C 362.487692 23.459657 354.688661 9.559975 340.808243 -0.68689 
+C 326.927826 -10.933756 308.099298 -16.691192 288.469423 -16.691192 
+C 268.839549 -16.691192 250.01102 -10.933756 236.130603 -0.68689 
+C 222.250186 9.559975 214.451154 23.459657 214.451154 37.950913 
+C 214.451154 52.442169 222.250186 66.341851 236.130603 76.588716 
+C 250.01102 86.835581 268.839549 92.593018 288.469423 92.593018 
+L 288.469423 92.593018 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 288.469423 72.92186 
+C 301.032543 72.92186 313.082801 69.237101 321.966268 62.679107 
+C 330.849735 56.121113 335.841115 47.225316 335.841115 37.950913 
+C 335.841115 28.676509 330.849735 19.780713 321.966268 13.222719 
+C 313.082801 6.664725 301.032543 2.979965 288.469423 2.979965 
+C 275.906303 2.979965 263.856045 6.664725 254.972578 13.222719 
+C 246.089111 19.780713 241.097731 28.676509 241.097731 37.950913 
+C 241.097731 47.225316 246.089111 56.121113 254.972578 62.679107 
+C 263.856045 69.237101 275.906303 72.92186 288.469423 72.92186 
+L 288.469423 72.92186 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 288.469423 53.250702 
+C 293.965788 53.250702 299.237776 51.63862 303.124293 48.769498 
+C 307.01081 45.900375 309.194538 42.008464 309.194538 37.950913 
+C 309.194538 33.893361 307.01081 30.00145 303.124293 27.132328 
+C 299.237776 24.263206 293.965788 22.651123 288.469423 22.651123 
+C 282.973058 22.651123 277.70107 24.263206 273.814553 27.132328 
+C 269.928037 30.00145 267.744308 33.893361 267.744308 37.950913 
+C 267.744308 42.008464 269.928037 45.900375 273.814553 48.769498 
+C 277.70107 51.63862 282.973058 53.250702 288.469423 53.250702 
+L 288.469423 53.250702 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 118.227404 201.877229 
+C 137.857278 201.877229 156.685807 196.119792 170.566224 185.872927 
+C 184.446641 175.626061 192.245673 161.726379 192.245673 147.235123 
+C 192.245673 132.743868 184.446641 118.844185 170.566224 108.59732 
+C 156.685807 98.350455 137.857278 92.593018 118.227404 92.593018 
+C 98.597529 92.593018 79.769001 98.350455 65.888584 108.59732 
+C 52.008166 118.844185 44.209135 132.743868 44.209135 147.235123 
+C 44.209135 161.726379 52.008166 175.626061 65.888584 185.872927 
+C 79.769001 196.119792 98.597529 201.877229 118.227404 201.877229 
+L 118.227404 201.877229 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_9">
+    <path d="M 118.227404 182.206071 
+C 130.790523 182.206071 142.840782 178.521311 151.724249 171.963317 
+C 160.607716 165.405324 165.599096 156.509527 165.599096 147.235123 
+C 165.599096 137.96072 160.607716 129.064923 151.724249 122.506929 
+C 142.840782 115.948936 130.790523 112.264176 118.227404 112.264176 
+C 105.664284 112.264176 93.614026 115.948936 84.730559 122.506929 
+C 75.847092 129.064923 70.855712 137.96072 70.855712 147.235123 
+C 70.855712 156.509527 75.847092 165.405324 84.730559 171.963317 
+C 93.614026 178.521311 105.664284 182.206071 118.227404 182.206071 
+L 118.227404 182.206071 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_10">
+    <path d="M 118.227404 162.534913 
+C 123.723769 162.534913 128.995757 160.92283 132.882273 158.053708 
+C 136.76879 155.184586 138.952519 151.292675 138.952519 147.235123 
+C 138.952519 143.177572 136.76879 139.285661 132.882273 136.416538 
+C 128.995757 133.547416 123.723769 131.935334 118.227404 131.935334 
+C 112.731039 131.935334 107.459051 133.547416 103.572534 136.416538 
+C 99.686017 139.285661 97.502288 143.177572 97.502288 147.235123 
+C 97.502288 151.292675 99.686017 155.184586 103.572534 158.053708 
+C 107.459051 160.92283 112.731039 162.534913 118.227404 162.534913 
+L 118.227404 162.534913 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 288.469423 201.877229 
+C 308.099298 201.877229 326.927826 196.119792 340.808243 185.872927 
+C 354.688661 175.626061 362.487692 161.726379 362.487692 147.235123 
+C 362.487692 132.743868 354.688661 118.844185 340.808243 108.59732 
+C 326.927826 98.350455 308.099298 92.593018 288.469423 92.593018 
+C 268.839549 92.593018 250.01102 98.350455 236.130603 108.59732 
+C 222.250186 118.844185 214.451154 132.743868 214.451154 147.235123 
+C 214.451154 161.726379 222.250186 175.626061 236.130603 185.872927 
+C 250.01102 196.119792 268.839549 201.877229 288.469423 201.877229 
+L 288.469423 201.877229 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_12">
+    <path d="M 288.469423 182.206071 
+C 301.032543 182.206071 313.082801 178.521311 321.966268 171.963317 
+C 330.849735 165.405324 335.841115 156.509527 335.841115 147.235123 
+C 335.841115 137.96072 330.849735 129.064923 321.966268 122.506929 
+C 313.082801 115.948936 301.032543 112.264176 288.469423 112.264176 
+C 275.906303 112.264176 263.856045 115.948936 254.972578 122.506929 
+C 246.089111 129.064923 241.097731 137.96072 241.097731 147.235123 
+C 241.097731 156.509527 246.089111 165.405324 254.972578 171.963317 
+C 263.856045 178.521311 275.906303 182.206071 288.469423 182.206071 
+L 288.469423 182.206071 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_13">
+    <path d="M 288.469423 162.534913 
+C 293.965788 162.534913 299.237776 160.92283 303.124293 158.053708 
+C 307.01081 155.184586 309.194538 151.292675 309.194538 147.235123 
+C 309.194538 143.177572 307.01081 139.285661 303.124293 136.416538 
+C 299.237776 133.547416 293.965788 131.935334 288.469423 131.935334 
+C 282.973058 131.935334 277.70107 133.547416 273.814553 136.416538 
+C 269.928037 139.285661 267.744308 143.177572 267.744308 147.235123 
+C 267.744308 151.292675 269.928037 155.184586 273.814553 158.053708 
+C 277.70107 160.92283 282.973058 162.534913 288.469423 162.534913 
+L 288.469423 162.534913 
+z
+" clip-path="url(#p4161faaa1b)" style="fill: none; stroke: #e4e2db; stroke-width: 1.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(99.80963 90.724772)">Low bias</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(90.209279 100.242913)">Low variance</text>
+   </g>
+   <g id="text_2">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(268.653134 90.724772)">High bias</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(260.451298 100.242913)">Low variance</text>
+   </g>
+   <g id="text_3">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(99.80963 200.008983)">Low bias</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(88.810763 209.527123)">High variance</text>
+   </g>
+   <g id="text_4">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(268.653134 200.008983)">High bias</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(259.052782 209.527123)">High variance</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="199.6475" y="15.558281" transform="rotate(-0 199.6475 15.558281)">Bias vs. variance (the dartboard view)</text>
+   </g>
+   <g id="PathCollection_1">
+    <defs>
+     <path id="m1af525114d" d="M 0 2.12132 
+C 0.562581 2.12132 1.102195 1.897805 1.5 1.5 
+C 1.897805 1.102195 2.12132 0.562581 2.12132 0 
+C 2.12132 -0.562581 1.897805 -1.102195 1.5 -1.5 
+C 1.102195 -1.897805 0.562581 -2.12132 0 -2.12132 
+C -0.562581 -2.12132 -1.102195 -1.897805 -1.5 -1.5 
+C -1.897805 -1.102195 -2.12132 -0.562581 -2.12132 0 
+C -2.12132 0.562581 -1.897805 1.102195 -1.5 1.5 
+C -1.102195 1.897805 -0.562581 2.12132 0 2.12132 
+z
+" style="stroke: #1f6f78"/>
+    </defs>
+    <g clip-path="url(#p4161faaa1b)">
+     <use xlink:href="#m1af525114d" x="123.787834" y="36.949137" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="118.527392" y="42.22757" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="117.365068" y="38.765073" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="117.97018" y="39.38986" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="118.091183" y="39.046113" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="114.142904" y="35.920732" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="120.967217" y="34.027497" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="118.382947" y="38.879635" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="116.532007" y="41.500029" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="121.281356" y="40.477828" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="114.54337" y="38.422873" style="fill: #1f6f78; stroke: #1f6f78"/>
+     <use xlink:href="#m1af525114d" x="122.847493" y="37.407656" style="fill: #1f6f78; stroke: #1f6f78"/>
+    </g>
+   </g>
+   <g id="PathCollection_2">
+    <defs>
+     <path id="mb909e10ae2" d="M 0 2.12132 
+C 0.562581 2.12132 1.102195 1.897805 1.5 1.5 
+C 1.897805 1.102195 2.12132 0.562581 2.12132 0 
+C 2.12132 -0.562581 1.897805 -1.102195 1.5 -1.5 
+C 1.102195 -1.897805 0.562581 -2.12132 0 -2.12132 
+C -0.562581 -2.12132 -1.102195 -1.897805 -1.5 -1.5 
+C -1.897805 -1.102195 -2.12132 -0.562581 -2.12132 0 
+C -2.12132 0.562581 -1.897805 1.102195 -1.5 1.5 
+C -1.102195 1.897805 -0.562581 2.12132 0 2.12132 
+z
+" style="stroke: #e0954b"/>
+    </defs>
+    <g clip-path="url(#p4161faaa1b)">
+     <use xlink:href="#mb909e10ae2" x="296.550193" y="31.103346" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="326.45449" y="23.707124" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="301.173556" y="24.637775" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="325.005174" y="-1" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="324.592897" y="-1" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="292.554475" y="29.944322" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="300.540123" y="53.943312" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="298.363516" y="35.265229" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="335.498751" y="23.324259" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="285.678569" y="12.901033" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="308.655216" y="44.894261" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="304.296071" y="29.43798" style="fill: #e0954b; stroke: #e0954b"/>
+     <use xlink:href="#mb909e10ae2" x="299.268602" y="21.160493" style="fill: #e0954b; stroke: #e0954b"/>
+    </g>
+   </g>
+   <g id="PathCollection_3">
+    <defs>
+     <path id="m3efba153d1" d="M 0 2.12132 
+C 0.562581 2.12132 1.102195 1.897805 1.5 1.5 
+C 1.897805 1.102195 2.12132 0.562581 2.12132 0 
+C 2.12132 -0.562581 1.897805 -1.102195 1.5 -1.5 
+C 1.102195 -1.897805 0.562581 -2.12132 0 -2.12132 
+C -0.562581 -2.12132 -1.102195 -1.897805 -1.5 -1.5 
+C -1.897805 -1.102195 -2.12132 -0.562581 -2.12132 0 
+C -2.12132 0.562581 -1.897805 1.102195 -1.5 1.5 
+C -1.102195 1.897805 -0.562581 2.12132 0 2.12132 
+z
+" style="stroke: #c1553d"/>
+    </defs>
+    <g clip-path="url(#p4161faaa1b)">
+     <use xlink:href="#m3efba153d1" x="77.456427" y="150.819736" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="136.600955" y="135.818449" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="138.323803" y="132.249487" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="145.203219" y="162.206168" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="133.566149" y="172.147439" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="107.294398" y="172.864765" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="137.23501" y="129.379954" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="114.647392" y="123.47739" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="105.991574" y="145.218768" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="121.000994" y="161.481842" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="126.169336" y="121.277406" style="fill: #c1553d; stroke: #c1553d"/>
+     <use xlink:href="#m3efba153d1" x="99.64082" y="135.195396" style="fill: #c1553d; stroke: #c1553d"/>
+    </g>
+   </g>
+   <g id="PathCollection_4">
+    <defs>
+     <path id="m76ef215c80" d="M 0 2.12132 
+C 0.562581 2.12132 1.102195 1.897805 1.5 1.5 
+C 1.897805 1.102195 2.12132 0.562581 2.12132 0 
+C 2.12132 -0.562581 1.897805 -1.102195 1.5 -1.5 
+C 1.102195 -1.897805 0.562581 -2.12132 0 -2.12132 
+C -0.562581 -2.12132 -1.102195 -1.897805 -1.5 -1.5 
+C -1.897805 -1.102195 -2.12132 -0.562581 -2.12132 0 
+C -2.12132 0.562581 -1.897805 1.102195 -1.5 1.5 
+C -1.102195 1.897805 -0.562581 2.12132 0 2.12132 
+z
+" style="stroke: #6c63a6"/>
+    </defs>
+    <g clip-path="url(#p4161faaa1b)">
+     <use xlink:href="#m76ef215c80" x="310.713013" y="93.61447" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="328.902533" y="116.616785" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="333.444246" y="125.602402" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="275.34088" y="101.565786" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="276.055999" y="125.823788" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="332.615375" y="148.469829" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="319.249871" y="106.273506" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="314.429094" y="149.537365" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="232.026123" y="151.287305" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="298.272009" y="141.706473" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="287.758957" y="122.905253" style="fill: #6c63a6; stroke: #6c63a6"/>
+     <use xlink:href="#m76ef215c80" x="298.738515" y="133.145106" style="fill: #6c63a6; stroke: #6c63a6"/>
+    </g>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_14">
+    <path d="M 428.705 229.198281 
+L 813.6 229.198281 
+L 813.6 21.558281 
+L 428.705 21.558281 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <path d="M 437.228316 229.198281 
+L 437.228316 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_2">
+      <defs>
+       <path id="m7e97a94d9a" d="M 0 0 
+L 0 3.5 
+" style="stroke: #5b6472; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="437.228316" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="437.228316" y="242.656953" transform="rotate(-0 437.228316 242.656953)">0</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_3">
+      <path d="M 482.087873 229.198281 
+L 482.087873 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="482.087873" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="482.087873" y="242.656953" transform="rotate(-0 482.087873 242.656953)">5</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_5">
+      <path d="M 526.94743 229.198281 
+L 526.94743 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="526.94743" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="526.94743" y="242.656953" transform="rotate(-0 526.94743 242.656953)">10</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_7">
+      <path d="M 571.806987 229.198281 
+L 571.806987 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="571.806987" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="571.806987" y="242.656953" transform="rotate(-0 571.806987 242.656953)">15</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_9">
+      <path d="M 616.666544 229.198281 
+L 616.666544 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="616.666544" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="616.666544" y="242.656953" transform="rotate(-0 616.666544 242.656953)">20</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_11">
+      <path d="M 661.526101 229.198281 
+L 661.526101 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="661.526101" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_11">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="661.526101" y="242.656953" transform="rotate(-0 661.526101 242.656953)">25</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_13">
+      <path d="M 706.385659 229.198281 
+L 706.385659 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="706.385659" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="706.385659" y="242.656953" transform="rotate(-0 706.385659 242.656953)">30</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_15">
+      <path d="M 751.245216 229.198281 
+L 751.245216 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="751.245216" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="751.245216" y="242.656953" transform="rotate(-0 751.245216 242.656953)">35</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_17">
+      <path d="M 796.104773 229.198281 
+L 796.104773 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_18">
+      <g>
+       <use xlink:href="#m7e97a94d9a" x="796.104773" y="229.198281" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="796.104773" y="242.656953" transform="rotate(-0 796.104773 242.656953)">40</text>
+     </g>
+    </g>
+    <g id="text_15">
+     <text style="font-size: 9px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="621.1525" y="255.263281" transform="rotate(-0 621.1525 255.263281)">training epoch</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_19">
+      <path d="M 428.705 225.688361 
+L 813.6 225.688361 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_20">
+      <defs>
+       <path id="mff4f2fe08d" d="M 0 0 
+L -3.5 0 
+" style="stroke: #5b6472; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="225.688361" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="228.917697" transform="rotate(-0 421.705 228.917697)">0.00</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_21">
+      <path d="M 428.705 201.83657 
+L 813.6 201.83657 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_22">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="201.83657" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="205.065906" transform="rotate(-0 421.705 205.065906)">0.25</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_23">
+      <path d="M 428.705 177.984779 
+L 813.6 177.984779 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_24">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="177.984779" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="181.214115" transform="rotate(-0 421.705 181.214115)">0.50</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_25">
+      <path d="M 428.705 154.132988 
+L 813.6 154.132988 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_26">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="154.132988" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_19">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="157.362324" transform="rotate(-0 421.705 157.362324)">0.75</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_27">
+      <path d="M 428.705 130.281196 
+L 813.6 130.281196 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_28">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="130.281196" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_20">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="133.510532" transform="rotate(-0 421.705 133.510532)">1.00</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_29">
+      <path d="M 428.705 106.429405 
+L 813.6 106.429405 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_30">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="106.429405" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_21">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="109.658741" transform="rotate(-0 421.705 109.658741)">1.25</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_31">
+      <path d="M 428.705 82.577614 
+L 813.6 82.577614 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_32">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="82.577614" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_22">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="85.80695" transform="rotate(-0 421.705 85.80695)">1.50</text>
+     </g>
+    </g>
+    <g id="ytick_8">
+     <g id="line2d_33">
+      <path d="M 428.705 58.725823 
+L 813.6 58.725823 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_34">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="58.725823" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_23">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="61.955159" transform="rotate(-0 421.705 61.955159)">1.75</text>
+     </g>
+    </g>
+    <g id="ytick_9">
+     <g id="line2d_35">
+      <path d="M 428.705 34.874032 
+L 813.6 34.874032 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linecap: square"/>
+     </g>
+     <g id="line2d_36">
+      <g>
+       <use xlink:href="#mff4f2fe08d" x="428.705" y="34.874032" style="fill: #5b6472; stroke: #5b6472; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_24">
+      <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #5b6472" x="421.705" y="38.103367" transform="rotate(-0 421.705 38.103367)">2.00</text>
+     </g>
+    </g>
+   </g>
+   <g id="line2d_37">
+    <path d="M 446.200227 36.609493 
+L 455.172139 59.077542 
+L 464.14405 78.806634 
+L 473.115962 96.130659 
+L 482.087873 111.342807 
+L 491.059784 124.700524 
+L 500.031696 136.429874 
+L 509.003607 146.729363 
+L 517.975519 155.773297 
+L 526.94743 163.714734 
+L 535.919341 170.688074 
+L 544.891253 176.811332 
+L 553.863164 182.188137 
+L 562.835076 186.909484 
+L 571.806987 191.055278 
+L 580.778899 194.695681 
+L 589.75081 197.892302 
+L 598.722721 200.69924 
+L 607.694633 203.163999 
+L 616.666544 205.328294 
+L 625.638456 207.22875 
+L 634.610367 208.897533 
+L 643.582279 210.362883 
+L 652.55419 211.6496 
+L 661.526101 212.779461 
+L 670.498013 213.771586 
+L 679.469924 214.642767 
+L 688.441836 215.407747 
+L 697.413747 216.079473 
+L 706.385659 216.669311 
+L 715.35757 217.187246 
+L 724.329481 217.642043 
+L 733.301393 218.041397 
+L 742.273304 218.392069 
+L 751.245216 218.699992 
+L 760.217127 218.970377 
+L 769.189038 219.207802 
+L 778.16095 219.416283 
+L 787.132861 219.59935 
+L 796.104773 219.760099 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #1f6f78; stroke-width: 2.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_38">
+    <path d="M 446.200227 30.996463 
+L 455.172139 49.069887 
+L 464.14405 65.423398 
+L 473.115962 80.220666 
+L 482.087873 93.609788 
+L 491.059784 105.724766 
+L 500.031696 116.686852 
+L 509.003607 126.605757 
+L 517.975519 135.580754 
+L 526.94743 143.701667 
+L 535.919341 151.049773 
+L 544.891253 157.698614 
+L 553.863164 163.714734 
+L 562.835076 169.158345 
+L 571.806987 174.083928 
+L 580.778899 178.373817 
+L 589.75081 182.215613 
+L 598.722721 185.663414 
+L 607.694633 188.757025 
+L 616.666544 191.531114 
+L 625.638456 194.016563 
+L 634.610367 196.24109 
+L 643.582279 198.229656 
+L 652.55419 200.004775 
+L 661.526101 201.586776 
+L 670.498013 202.994024 
+L 679.469924 204.243121 
+L 688.441836 205.349074 
+L 697.413747 206.325456 
+L 706.385659 207.184541 
+L 715.35757 207.937432 
+L 724.329481 208.594172 
+L 733.301393 209.163848 
+L 742.273304 209.65468 
+L 751.245216 210.074106 
+L 760.217127 210.428857 
+L 769.189038 210.725023 
+L 778.16095 210.968115 
+L 787.132861 211.163119 
+L 796.104773 211.314549 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke: #c1553d; stroke-width: 2.2; stroke-linecap: square"/>
+   </g>
+   <g id="line2d_39">
+    <path d="M 571.806987 229.198281 
+L 571.806987 21.558281 
+" clip-path="url(#pc4b5d2476e)" style="fill: none; stroke-dasharray: 5.92,2.56; stroke-dashoffset: 0; stroke: #e0954b; stroke-width: 1.6"/>
+   </g>
+   <g id="patch_15">
+    <path d="M 428.705 229.198281 
+L 428.705 21.558281 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_16">
+    <path d="M 813.6 229.198281 
+L 813.6 21.558281 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_17">
+    <path d="M 428.705 229.198281 
+L 813.6 229.198281 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 428.705 21.558281 
+L 813.6 21.558281 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_25">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #e0954b" transform="translate(576.292943 34.896607)">early-stopping</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #e0954b" transform="translate(576.292943 44.414748)">point</text>
+   </g>
+   <g id="text_26">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="621.1525" y="15.558281" transform="rotate(-0 621.1525 15.558281)">Under/overfitting: train vs. validation loss</text>
+   </g>
+   <g id="legend_1">
+    <g id="line2d_40">
+     <path d="M 721.181094 32.691953 
+L 729.681094 32.691953 
+L 738.181094 32.691953 
+" style="fill: none; stroke: #1f6f78; stroke-width: 2.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_27">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="744.981094" y="35.666953" transform="rotate(-0 744.981094 35.666953)">training loss</text>
+    </g>
+    <g id="line2d_41">
+     <path d="M 721.181094 45.168359 
+L 729.681094 45.168359 
+L 738.181094 45.168359 
+" style="fill: none; stroke: #c1553d; stroke-width: 2.2; stroke-linecap: square"/>
+    </g>
+    <g id="text_28">
+     <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; text-anchor: start; fill: #5b6472" x="744.981094" y="48.143359" transform="rotate(-0 744.981094 48.143359)">validation loss</text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p4161faaa1b">
+   <rect x="7.2" y="21.558281" width="384.895" height="207.64"/>
+  </clipPath>
+  <clipPath id="pc4b5d2476e">
+   <rect x="428.705" y="21.558281" width="384.895" height="207.64"/>
+  </clipPath>
+ </defs>
+</svg>
+          <p class="caption"><b>Left:</b> the classic "dartboard" picture of bias vs. variance — low bias/low variance (top-left) is the goal; every other quadrant misses in a different way. <b>Right:</b> the telltale overfitting signature — training loss keeps falling while validation loss turns back upward; the dashed line marks where you'd want to stop.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 06 -->
+    <div class="stage" id="s06">
+      <div class="rail-col"><div class="node">06</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag f">Foundations</p>
+        <h3>Common Practices</h3>
+        <p class="plain">This lecture is the field-tested checklist for not wasting weeks of compute on a broken setup. Before any real training: verify your gradients are actually correct using tiny numerical checks, and confirm the network can memorize a handful of examples (if it can't even overfit 10 samples, something is broken). During training: watch the loss curves and never, ever look at the test set until the very last step of the entire project — that's the one rule this lecture repeats the most.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>h</code> = a tiny step size used to numerically estimate a gradient by nudging a weight slightly &nbsp; <code>α</code> (alpha) = significance level in a statistical test (e.g. 0.05) &nbsp; <code>t-test</code> = a statistical test asking "are these two results different enough to not be chance?"
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Gradient checking</td><td class="desc">Compare your backprop gradient against a slow numerical estimate to catch implementation bugs.</td></tr>
+            <tr><td class="term">The "test set vault"</td><td class="desc">Never touch the test set during development — only open it once, at the very end.</td></tr>
+            <tr><td class="term">Class imbalance fixes</td><td class="desc">Resampling, oversampling minority classes, or weighting the loss by inverse class frequency.</td></tr>
+            <tr><td class="term">Ensembling</td><td class="desc">Train several models and combine their predictions — reliably boosts accuracy a little further.</td></tr>
+            <tr><td class="term">Accuracy / Precision / Recall / F1 / ROC</td><td class="desc">Different lenses on "how good is the model," each sensitive to different kinds of mistakes.</td></tr>
+            <tr><td class="term">Cross-validation</td><td class="desc">Split data into k folds, train k times, so every sample gets used for both training and testing.</td></tr>
+            <tr><td class="term">Significance testing</td><td class="desc">Confirming that "my model is better" isn't just random luck from one lucky training run.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 07 -->
+    <div class="stage" id="s07">
+      <div class="rail-col"><div class="node amber">07</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag v">Vision &amp; Sequence</p>
+        <h3>Architectures</h3>
+        <p class="plain">This is a "greatest hits" tour of famous CNNs, each solving a specific problem left by the last. <b>LeNet</b> (1998) proved the convolution-pooling recipe works, on handwritten digits. <b>AlexNet</b> (2012) scaled it up with ReLU, dropout, and GPUs, halving the ImageNet error rate overnight. <b>VGG</b> showed that simply stacking small 3×3 filters, very deep, works well. <b>GoogLeNet/Inception</b> let the network choose its own mix of filter sizes at each layer instead of fixing it by hand. <b>ResNet</b> solved a strange discovery — that just adding more layers eventually made training <i>worse</i>, not better — by adding "skip connections" that let gradients flow straight through.</p>
+        <table>
+          <thead><tr><th>Architecture</th><th>Key idea it introduced</th></tr></thead>
+          <tbody>
+            <tr><td class="term">LeNet-5 (1998)</td><td class="desc">The original conv → pool → conv → pool → classify template.</td></tr>
+            <tr><td class="term">AlexNet (2012)</td><td class="desc">ReLU + dropout + GPU training at scale — the breakthrough moment.</td></tr>
+            <tr><td class="term">Network-in-Network</td><td class="desc">Introduced 1×1 convolutions and global average pooling.</td></tr>
+            <tr><td class="term">VGG</td><td class="desc">Very deep, but only ever uses simple, uniform 3×3 filters.</td></tr>
+            <tr><td class="term">GoogLeNet / Inception</td><td class="desc">Runs several filter sizes in parallel per layer and lets training decide what's useful.</td></tr>
+            <tr><td class="term">ResNet (residual/skip connections)</td><td class="desc">Adds the input straight to the output of a block, so gradients have a direct path backward — enables truly deep (100+ layer) networks.</td></tr>
+            <tr><td class="term">DenseNet</td><td class="desc">Connects every layer to every later layer — maximal feature reuse, fewer parameters.</td></tr>
+            <tr><td class="term">Neural Architecture Search (NAS)</td><td class="desc">Use reinforcement learning or genetic algorithms to design the architecture itself.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 08 -->
+    <div class="stage" id="s08">
+      <div class="rail-col"><div class="node amber">08</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag v">Vision &amp; Sequence</p>
+        <h3>Recurrent Neural Networks &amp; LSTMs</h3>
+        <p class="plain">For sequences — text, speech, sensor streams — order matters, and a plain feedforward network has no memory of what came before. A <b>Recurrent Neural Network (RNN)</b> carries a "hidden state" forward step by step, like a running notebook it updates after reading each new word. The catch: over long sequences, the same vanishing-gradient problem from lecture 2 returns with a vengeance, so basic RNNs forget things that happened many steps ago. <b>LSTM</b> fixes this with a separate "cell state" — a conveyor belt of memory — plus three gates that explicitly learn what to forget, what to add, and what to output at every step.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>h_t</code> = hidden state at time t (the "notebook") &nbsp; <code>x_t</code> = input at time t &nbsp; <code>W_hh, W_xh, W_hy</code> = the (shared, reused-every-step) weight matrices &nbsp; <code>C_t</code> = LSTM cell state (long-term memory) &nbsp; <code>f_t, i_t, o_t</code> = forget / input / output gates, each a number between 0 and 1
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Hidden state update</td><td class="desc">New hidden state = a squashed mix of the previous hidden state and the new input.</td></tr>
+            <tr><td class="term">BPTT (Backprop Through Time)</td><td class="desc">Backpropagation unrolled across every time step of the sequence.</td></tr>
+            <tr><td class="term">Truncated BPTT</td><td class="desc">Only backpropagate through a limited recent window, for efficiency on long sequences.</td></tr>
+            <tr><td class="term">Long-term dependency problem</td><td class="desc">Plain RNNs struggle to connect information that's many steps apart.</td></tr>
+            <tr><td class="term">LSTM cell state</td><td class="desc">A separate memory highway that gradients can cross without shrinking — the fix for vanishing gradients.</td></tr>
+            <tr><td class="term">Forget / input / output gates</td><td class="desc">Learned "valves" (0 to 1) controlling what leaves, enters, and is read from the cell state.</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="839.157732pt" height="273.318281pt" viewBox="0 0 839.157732 273.318281" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-04T02:03:56.693619</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 273.318281 
+L 839.157732 273.318281 
+L 839.157732 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 36.984926 189.693281 
+L 80.669484 189.693281 
+Q 82.655146 189.693281 82.655146 186.636281 
+L 82.655146 119.382281 
+Q 82.655146 116.325281 80.669484 116.325281 
+L 36.984926 116.325281 
+Q 34.999264 116.325281 34.999264 119.382281 
+L 34.999264 186.636281 
+Q 34.999264 189.693281 36.984926 189.693281 
+z
+" clip-path="url(#p249d76cfa9)" style="fill: #e7f1f0; stroke: #1f6f78; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 140.239336 189.693281 
+L 183.923894 189.693281 
+Q 185.909556 189.693281 185.909556 186.636281 
+L 185.909556 119.382281 
+Q 185.909556 116.325281 183.923894 116.325281 
+L 140.239336 116.325281 
+Q 138.253674 116.325281 138.253674 119.382281 
+L 138.253674 186.636281 
+Q 138.253674 189.693281 140.239336 189.693281 
+z
+" clip-path="url(#p249d76cfa9)" style="fill: #e7f1f0; stroke: #1f6f78; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_4">
+    <path d="M 243.493746 189.693281 
+L 287.178304 189.693281 
+Q 289.163966 189.693281 289.163966 186.636281 
+L 289.163966 119.382281 
+Q 289.163966 116.325281 287.178304 116.325281 
+L 243.493746 116.325281 
+Q 241.508084 116.325281 241.508084 119.382281 
+L 241.508084 186.636281 
+Q 241.508084 189.693281 243.493746 189.693281 
+z
+" clip-path="url(#p249d76cfa9)" style="fill: #e7f1f0; stroke: #1f6f78; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 346.748156 189.693281 
+L 390.432714 189.693281 
+Q 392.418376 189.693281 392.418376 186.636281 
+L 392.418376 119.382281 
+Q 392.418376 116.325281 390.432714 116.325281 
+L 346.748156 116.325281 
+Q 344.762494 116.325281 344.762494 119.382281 
+L 344.762494 186.636281 
+Q 344.762494 189.693281 346.748156 189.693281 
+z
+" clip-path="url(#p249d76cfa9)" style="fill: #e7f1f0; stroke: #1f6f78; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="text_1">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f6f78" x="58.827205" y="156.596469" transform="rotate(-0 58.827205 156.596469)">A</text>
+   </g>
+   <g id="text_2">
+    <!-- $x_{t-1}$ -->
+    <g style="fill: #1b2430" transform="translate(48.377205 208.035281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">x</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">−</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_6">
+    <path d="M 58.827205 218.266827 
+Q 58.827205 204.979361 58.827205 193.257142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 56.827205 197.257142 
+L 58.827205 193.257142 
+L 60.827205 197.257142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_3">
+    <!-- $y_{t-1}$ -->
+    <g style="fill: #1b2430" transform="translate(48.377205 79.641281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">y</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">−</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_7">
+    <path d="M 58.827205 114.328827 
+Q 58.827205 101.041361 58.827205 89.319142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 56.827205 93.319142 
+L 58.827205 89.319142 
+L 60.827205 93.319142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_8">
+    <path d="M 84.653897 153.009281 
+Q 110.454351 153.009281 134.018738 153.009281 
+" style="fill: none; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 130.018738 151.009281 
+L 134.018738 153.009281 
+L 130.018738 155.009281 
+z
+" style="fill: #e0954b; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_4">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e0954b" x="110.45441" y="134.667281" transform="rotate(-0 110.45441 134.667281)">h</text>
+   </g>
+   <g id="text_5">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f6f78" x="162.081615" y="156.596469" transform="rotate(-0 162.081615 156.596469)">A</text>
+   </g>
+   <g id="text_6">
+    <!-- $x_{t}$ -->
+    <g style="fill: #1b2430" transform="translate(157.806615 208.035281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">x</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_9">
+    <path d="M 162.081615 218.266827 
+Q 162.081615 204.979361 162.081615 193.257142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 160.081615 197.257142 
+L 162.081615 193.257142 
+L 164.081615 197.257142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_7">
+    <!-- $y_{t}$ -->
+    <g style="fill: #1b2430" transform="translate(157.806615 79.641281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">y</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_10">
+    <path d="M 162.081615 114.328827 
+Q 162.081615 101.041361 162.081615 89.319142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 160.081615 93.319142 
+L 162.081615 89.319142 
+L 164.081615 93.319142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_11">
+    <path d="M 187.908307 153.009281 
+Q 213.708761 153.009281 237.273148 153.009281 
+" style="fill: none; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 233.273148 151.009281 
+L 237.273148 153.009281 
+L 233.273148 155.009281 
+z
+" style="fill: #e0954b; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_8">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e0954b" x="213.70882" y="134.667281" transform="rotate(-0 213.70882 134.667281)">h</text>
+   </g>
+   <g id="text_9">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f6f78" x="265.336025" y="156.596469" transform="rotate(-0 265.336025 156.596469)">A</text>
+   </g>
+   <g id="text_10">
+    <!-- $x_{t+1}$ -->
+    <g style="fill: #1b2430" transform="translate(254.886025 208.035281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">x</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">+</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_12">
+    <path d="M 265.336025 218.266827 
+Q 265.336025 204.979361 265.336025 193.257142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 263.336025 197.257142 
+L 265.336025 193.257142 
+L 267.336025 197.257142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_11">
+    <!-- $y_{t+1}$ -->
+    <g style="fill: #1b2430" transform="translate(254.886025 79.641281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">y</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">+</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_13">
+    <path d="M 265.336025 114.328827 
+Q 265.336025 101.041361 265.336025 89.319142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 263.336025 93.319142 
+L 265.336025 89.319142 
+L 267.336025 93.319142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="patch_14">
+    <path d="M 291.162717 153.009281 
+Q 316.963171 153.009281 340.527558 153.009281 
+" style="fill: none; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+    <path d="M 336.527558 151.009281 
+L 340.527558 153.009281 
+L 336.527558 155.009281 
+z
+" style="fill: #e0954b; stroke: #e0954b; stroke-width: 2; stroke-linecap: round"/>
+   </g>
+   <g id="text_12">
+    <text style="font-weight: 700; font-size: 10px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #e0954b" x="316.96323" y="134.667281" transform="rotate(-0 316.96323 134.667281)">h</text>
+   </g>
+   <g id="text_13">
+    <text style="font-weight: 700; font-size: 13px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1f6f78" x="368.590435" y="156.596469" transform="rotate(-0 368.590435 156.596469)">A</text>
+   </g>
+   <g id="text_14">
+    <!-- $x_{t+2}$ -->
+    <g style="fill: #1b2430" transform="translate(358.140435 208.035281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">x</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">+</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_15">
+    <path d="M 368.590435 218.266827 
+Q 368.590435 204.979361 368.590435 193.257142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 366.590435 197.257142 
+L 368.590435 193.257142 
+L 370.590435 197.257142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_15">
+    <!-- $y_{t+2}$ -->
+    <g style="fill: #1b2430" transform="translate(358.140435 79.641281)">
+     <text>
+      <tspan x="0" y="-0.53125" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">y</tspan>
+      <tspan x="5.62207" y="1.109375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.525049" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">+</tspan>
+      <tspan x="16.392603" y="1.109375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">2</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_16">
+    <path d="M 368.590435 114.328827 
+Q 368.590435 101.041361 368.590435 89.319142 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 366.590435 93.319142 
+L 368.590435 89.319142 
+L 370.590435 93.319142 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_16">
+    <text style="font-style: italic; font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="205.766173" y="39.900281" transform="rotate(-0 205.766173 39.900281)">Same weights "A" reused at every time step</text>
+   </g>
+   <g id="text_17">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="205.766173" y="15.558281" transform="rotate(-0 205.766173 15.558281)">RNN unrolled through time</text>
+   </g>
+  </g>
+  <g id="axes_2">
+   <g id="patch_17">
+    <path d="M 520.037149 175.631081 
+C 525.829789 175.631081 531.385957 172.796559 535.481972 167.751785 
+C 539.577987 162.707011 541.879428 155.863869 541.879428 148.729481 
+C 541.879428 141.595094 539.577987 134.751951 535.481972 129.707177 
+C 531.385957 124.662404 525.829789 121.827881 520.037149 121.827881 
+C 514.244509 121.827881 508.68834 124.662404 504.592325 129.707177 
+C 500.49631 134.751951 498.19487 141.595094 498.19487 148.729481 
+C 498.19487 155.863869 500.49631 162.707011 504.592325 167.751785 
+C 508.68834 172.796559 514.244509 175.631081 520.037149 175.631081 
+z
+" clip-path="url(#pd0de773d24)" style="fill: #c1553d; opacity: 0.18; stroke: #c1553d; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_18">
+    <path d="M 615.348912 175.631081 
+C 621.141552 175.631081 626.69772 172.796559 630.793735 167.751785 
+C 634.88975 162.707011 637.191191 155.863869 637.191191 148.729481 
+C 637.191191 141.595094 634.88975 134.751951 630.793735 129.707177 
+C 626.69772 124.662404 621.141552 121.827881 615.348912 121.827881 
+C 609.556272 121.827881 604.000103 124.662404 599.904088 129.707177 
+C 595.808073 134.751951 593.506633 141.595094 593.506633 148.729481 
+C 593.506633 155.863869 595.808073 162.707011 599.904088 167.751785 
+C 604.000103 172.796559 609.556272 175.631081 615.348912 175.631081 
+z
+" clip-path="url(#pd0de773d24)" style="fill: #1f6f78; opacity: 0.18; stroke: #1f6f78; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="patch_19">
+    <path d="M 718.603322 175.631081 
+C 724.395962 175.631081 729.95213 172.796559 734.048145 167.751785 
+C 738.144161 162.707011 740.445601 155.863869 740.445601 148.729481 
+C 740.445601 141.595094 738.144161 134.751951 734.048145 129.707177 
+C 729.95213 124.662404 724.395962 121.827881 718.603322 121.827881 
+C 712.810682 121.827881 707.254513 124.662404 703.158498 129.707177 
+C 699.062483 134.751951 696.761043 141.595094 696.761043 148.729481 
+C 696.761043 155.863869 699.062483 162.707011 703.158498 167.751785 
+C 707.254513 172.796559 712.810682 175.631081 718.603322 175.631081 
+z
+" clip-path="url(#pd0de773d24)" style="fill: #e0954b; opacity: 0.18; stroke: #e0954b; stroke-width: 1.8; stroke-linejoin: miter"/>
+   </g>
+   <g id="line2d_1">
+    <path d="M 452.52465 60.687881 
+L 809.943761 60.687881 
+" clip-path="url(#pd0de773d24)" style="fill: none; stroke: #6c63a6; stroke-width: 3; stroke-linecap: round"/>
+   </g>
+   <g id="text_18">
+    <!-- $C_{t-1}$ -->
+    <g style="fill: #6c63a6" transform="translate(417.510679 63.447256)">
+     <text>
+      <tspan x="0" y="-0.578125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #6c63a6">C</tspan>
+      <tspan x="6.982422" y="1.0625" style="font-style: oblique; font-size: 7px; font-family: 'DejaVu Sans'; fill: #6c63a6">t</tspan>
+      <tspan x="11.09082" y="1.0625" style="font-size: 7px; font-family: 'DejaVu Sans'; fill: #6c63a6">−</tspan>
+      <tspan x="18.319824" y="1.0625" style="font-size: 7px; font-family: 'DejaVu Sans'; fill: #6c63a6">1</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_19">
+    <!-- $C_t$ -->
+    <g style="fill: #6c63a6" transform="translate(821.857732 63.447256)">
+     <text>
+      <tspan x="0" y="-0.578125" style="font-style: oblique; font-size: 10px; font-family: 'DejaVu Sans'; fill: #6c63a6">C</tspan>
+      <tspan x="6.982422" y="1.0625" style="font-style: oblique; font-size: 7px; font-family: 'DejaVu Sans'; fill: #6c63a6">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="text_20">
+    <text style="font-weight: 700; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d" transform="translate(506.437117 146.484178)">forget</text>
+    <!-- $f_t=\sigma(\cdot)$ -->
+    <g style="fill: #c1553d" transform="translate(505.919149 155.279409)">
+     <text>
+      <tspan x="0" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">f</tspan>
+      <tspan x="14.587659" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">σ</tspan>
+      <tspan x="2.728394" y="0.390625" style="font-style: oblique; font-size: 5.46px; font-family: 'DejaVu Sans'; fill: #c1553d">t</tspan>
+      <tspan x="6.584119" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">=</tspan>
+      <tspan x="19.499524" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">(</tspan>
+      <tspan x="22.523083" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">⋅</tspan>
+      <tspan x="24.986584" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #c1553d">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_20">
+    <path d="M 520.037149 119.828442 
+Q 520.037149 98.595088 520.037149 79.150589 
+" style="fill: none; stroke: #c1553d; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 518.037149 83.150589 
+L 520.037149 79.150589 
+L 522.037149 83.150589 
+z
+" style="fill: #c1553d; stroke: #c1553d; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_21">
+    <text style="font-weight: 700; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78" transform="translate(603.803693 146.514647)">input</text>
+    <!-- $i_t=\sigma(\cdot)$ -->
+    <g style="fill: #1f6f78" transform="translate(601.542912 155.248941)">
+     <text>
+      <tspan x="0" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">i</tspan>
+      <tspan x="14.012463" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">σ</tspan>
+      <tspan x="2.153198" y="0.390625" style="font-style: oblique; font-size: 5.46px; font-family: 'DejaVu Sans'; fill: #1f6f78">t</tspan>
+      <tspan x="6.008923" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">=</tspan>
+      <tspan x="18.924329" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">(</tspan>
+      <tspan x="21.947888" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">⋅</tspan>
+      <tspan x="24.411389" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #1f6f78">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_21">
+    <path d="M 615.348912 119.828442 
+Q 615.348912 98.595088 615.348912 79.150589 
+" style="fill: none; stroke: #1f6f78; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 613.348912 83.150589 
+L 615.348912 79.150589 
+L 617.348912 83.150589 
+z
+" style="fill: #1f6f78; stroke: #1f6f78; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_22">
+    <text style="font-weight: 700; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b" transform="translate(703.851572 146.514647)">output</text>
+    <!-- $o_t=\sigma(\cdot)$ -->
+    <g style="fill: #e0954b" transform="translate(703.471322 155.248941)">
+     <text>
+      <tspan x="0" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">o</tspan>
+      <tspan x="16.600842" y="-0.921875" style="font-style: oblique; font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">σ</tspan>
+      <tspan x="4.741577" y="0.390625" style="font-style: oblique; font-size: 5.46px; font-family: 'DejaVu Sans'; fill: #e0954b">t</tspan>
+      <tspan x="8.597302" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">=</tspan>
+      <tspan x="21.512708" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">(</tspan>
+      <tspan x="24.536267" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">⋅</tspan>
+      <tspan x="26.999768" y="-0.921875" style="font-size: 7.8px; font-family: 'DejaVu Sans'; fill: #e0954b">)</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_22">
+    <path d="M 718.603322 119.828442 
+Q 718.603322 98.595088 718.603322 79.150589 
+" style="fill: none; stroke: #e0954b; stroke-width: 1.6; stroke-linecap: round"/>
+    <path d="M 716.603322 83.150589 
+L 718.603322 79.150589 
+L 720.603322 83.150589 
+z
+" style="fill: #e0954b; stroke: #e0954b; stroke-width: 1.6; stroke-linecap: round"/>
+   </g>
+   <g id="text_23">
+    <!-- $h_{t-1}, x_t$ -->
+    <g style="fill: #1b2430" transform="translate(455.043767 222.097481)">
+     <text>
+      <tspan x="0" y="-0.40625" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">h</tspan>
+      <tspan x="26.166504" y="-0.40625" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">x</tspan>
+      <tspan x="6.020996" y="1.234375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="31.788574" y="1.234375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="9.923975" y="1.234375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">−</tspan>
+      <tspan x="16.791528" y="1.234375" style="font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">1</tspan>
+      <tspan x="21.295898" y="-0.40625" style="font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">,</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_23">
+    <path d="M 481.664333 208.383672 
+Q 490.25226 198.86424 497.791713 190.507007 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 493.627331 192.137321 
+L 497.791713 190.507007 
+L 496.597335 194.816701 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_24">
+    <!-- $h_t$ -->
+    <g style="fill: #1b2430" transform="translate(785.622144 222.097481)">
+     <text>
+      <tspan x="0" y="-0.40625" style="font-style: oblique; font-size: 9.5px; font-family: 'DejaVu Sans'; fill: #1b2430">h</tspan>
+      <tspan x="6.020996" y="1.234375" style="font-style: oblique; font-size: 6.65px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+     </text>
+    </g>
+   </g>
+   <g id="patch_24">
+    <path d="M 790.087144 180.079255 
+Q 790.087144 192.751847 790.087144 203.859191 
+" style="fill: none; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+    <path d="M 792.087144 199.859191 
+L 790.087144 203.859191 
+L 788.087144 199.859191 
+z
+" style="fill: #5b6472; stroke: #5b6472; stroke-width: 1.4; stroke-linecap: round"/>
+   </g>
+   <g id="text_25">
+    <text style="font-weight: 700; font-size: 11px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #1b2430" x="631.234206" y="15.558281" transform="rotate(-0 631.234206 15.558281)">LSTM cell: gates control the cell state highway</text>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="p249d76cfa9">
+   <rect x="7.2" y="21.558281" width="397.132346" height="244.56"/>
+  </clipPath>
+  <clipPath id="pd0de773d24">
+   <rect x="432.668032" y="21.558281" width="397.132346" height="244.56"/>
+  </clipPath>
+ </defs>
+</svg>
+          <p class="caption"><b>Left:</b> the same block "A" is reused at every time step — this weight-sharing is what lets an RNN handle sequences of any length. <b>Right:</b> inside an LSTM, three gates (forget/input/output) each decide, using a sigmoid, how much of the cell-state highway to let through.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 09 -->
+    <div class="stage" id="s09">
+      <div class="rail-col"><div class="node amber">09</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag v">Vision &amp; Sequence</p>
+        <h3>Visualization &amp; Attention Mechanisms</h3>
+        <p class="plain">This lecture has two halves. The first is about peeking inside a trained network — visualizing which filters activated, which pixels drove a decision (saliency maps), what a neuron's "favorite" input looks like. The second, more important half is <b>attention</b>: rather than squashing an entire input sentence into one fixed-size vector (which loses information for long sentences), let the decoder look back at <i>every</i> position of the input and learn, freshly at each output step, which ones matter most right now. The <b>Transformer</b> takes this to its logical extreme — build the entire network out of attention alone, no recurrence needed at all — and now underlies almost all modern language models (including BERT).</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>α_t,i</code> (alpha) = attention weight — how much output step t "looks at" input position i &nbsp; <code>Q, K, V</code> = Query / Key / Value vectors — "what I'm looking for," "what I offer," "what I'll give you if matched" &nbsp; <code>d_k</code> = dimensionality of the key vectors, used to rescale the scores so they don't grow too large
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Saliency map / Grad-CAM</td><td class="desc">Highlights which input pixels most influenced the network's decision.</td></tr>
+            <tr><td class="term">Seq2seq (encoder–decoder)</td><td class="desc">Encoder reads the whole input into hidden states; decoder generates the output from them.</td></tr>
+            <tr><td class="term">Dynamic context vector / alignment</td><td class="desc">Instead of one fixed summary vector, a fresh weighted mix of all encoder states at every output step.</td></tr>
+            <tr><td class="term">Self-attention</td><td class="desc">Every word in a sentence directly attends to every other word — resolves things like pronoun reference.</td></tr>
+            <tr><td class="term">Scaled dot-product attention</td><td class="desc">The Transformer's core formula: match queries to keys, scale, softmax, then mix the values.</td></tr>
+            <tr><td class="term">Multi-head attention</td><td class="desc">Run several attention "lenses" in parallel so different heads can specialize in different relationships.</td></tr>
+            <tr><td class="term">Positional encoding</td><td class="desc">Since attention has no built-in sense of order, word position is added in explicitly.</td></tr>
+            <tr><td class="term">BERT</td><td class="desc">A Transformer pre-trained on massive unlabeled text by guessing masked-out words.</td></tr>
+          </tbody>
+        </table>
+        <div class="chart-box">
+<svg xmlns:xlink="http://www.w3.org/1999/xlink" width="524.956999pt" height="437.384603pt" viewBox="0 0 524.956999 437.384603" xmlns="http://www.w3.org/2000/svg" version="1.1">
+ <metadata>
+  <rdf:RDF xmlns:dc="http://purl.org/dc/elements/1.1/" xmlns:cc="http://creativecommons.org/ns#" xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#">
+   <cc:Work>
+    <dc:type rdf:resource="http://purl.org/dc/dcmitype/StillImage"/>
+    <dc:date>2026-07-04T02:03:57.035048</dc:date>
+    <dc:format>image/svg+xml</dc:format>
+    <dc:creator>
+     <cc:Agent>
+      <dc:title>Matplotlib v3.10.8, https://matplotlib.org/</dc:title>
+     </cc:Agent>
+    </dc:creator>
+   </cc:Work>
+  </rdf:RDF>
+ </metadata>
+ <defs>
+  <style type="text/css">*{stroke-linejoin: round; stroke-linecap: butt}</style>
+ </defs>
+ <g id="figure_1">
+  <g id="patch_1">
+   <path d="M 0 437.384603 
+L 524.956999 437.384603 
+L 524.956999 0 
+L 0 0 
+z
+" style="fill: #ffffff"/>
+  </g>
+  <g id="axes_1">
+   <g id="patch_2">
+    <path d="M 72.265391 373.10427 
+L 513.346191 373.10427 
+L 513.346191 27.94 
+L 72.265391 27.94 
+z
+" style="fill: #ffffff"/>
+   </g>
+   <g clip-path="url(#pdd7dccc561)">
+    <image xlink:href="data:image/png;base64,
+iVBORw0KGgoAAAANSUhEUgAAAmUAAAHgCAYAAADkGhrRAAAKhUlEQVR4nO3YP6rcVRyH4Zm5V5MLKcRYaqFoIZg9KLgDl2Bj5R7cguAWBFs3oJYBEbQRiY12IiqEYHL/zPxchef7wjzPCj7wY8555+y37Zdtd2auj0+nJ4w4btfTE5a7ung4PWG51x99OT1hud9++mh6woj97jA9Ybnr0/md3y8fHkxPGHG3vZiesNz5/aIBAIJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAAB+xd3j7fpEasdt9vpCSMu9vemJyy37Y7TE5Y7bXfTE5bbdqfpCSzy5ntfT09Y7o+fP56eMOK4XU9PWM5LGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAAB+5vjD9v0iNVuT/9OTxhxsb83PWG503Y7PWG5i8P5feeXDw+mJ4zYttP0hOW23dldWbttu5ueMOKNR19NT1jOSxkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBgf333/TY9YrXT7m56woi70/PpCctdXTycnrDc9enp9IQBZ3eM7Xa73e7hW19MT1ju+e+fTU9Y7ub0bHrCiJvj+Z1lXsoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACNg/u/lumx7BGleXr01PWO6wv5yesNxxu5mesNzt8dn0hBHb7vyO76vLh9MTlnvng2+nJ4x48s370xOW81IGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAI2N8ef9ymR6z26tufT08Y8eeTT6YnDDhND1jucn81PQH+N9vu7K6s3WH/0vSEIWf4racHAAAgygAAEkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIuHz3w8fTG5b7+9dPpyeMOOwvpycstz/D/x0vjv9MT1ju4nBvesKIy/396QnLvTj+NT1hufuHV6YnjDjt7qYnLHd+NxYAQJAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAaIMACBAlAEABIgyAIAAUQYAECDKAAACRBkAQIAoAwAIEGUAAAGiDAAgQJQBAASIMgCAAFEGABAgygAAAkQZAECAKAMACBBlAAABogwAIECUAQAEiDIAgABRBgAQIMoAAAJEGQBAgCgDAAgQZQAAAf8BDKV3ttoFYesAAAAASUVORK5CYII=" id="image2eeb895065" transform="scale(1 -1) translate(0 -345.6)" x="72.265391" y="-27.50427" width="441.36" height="345.6"/>
+   </g>
+   <g id="patch_3">
+    <path d="M 336.913871 225.176725 
+L 513.346191 225.176725 
+L 513.346191 373.10427 
+L 336.913871 373.10427 
+L 336.913871 225.176725 
+z
+" clip-path="url(#pdd7dccc561)" style="fill: none; stroke: #c1553d; stroke-width: 2.2; stroke-linejoin: miter"/>
+   </g>
+   <g id="matplotlib.axis_1">
+    <g id="xtick_1">
+     <g id="line2d_1">
+      <defs>
+       <path id="mc16f6d9d97" d="M 0 0 
+L 0 3.5 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="94.319431" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_1">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(91.118557 386.817254) rotate(-45)">I</text>
+     </g>
+    </g>
+    <g id="xtick_2">
+     <g id="line2d_2">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="138.427511" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_2">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(118.164261 403.87963) rotate(-45)">would</text>
+     </g>
+    </g>
+    <g id="xtick_3">
+     <g id="line2d_3">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="182.535591" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_3">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(170.305847 395.846124) rotate(-45)">like</text>
+     </g>
+    </g>
+    <g id="xtick_4">
+     <g id="line2d_4">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="226.643671" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_4">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(218.931345 391.328706) rotate(-45)">to</text>
+     </g>
+    </g>
+    <g id="xtick_5">
+     <g id="line2d_5">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="270.751751" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_5">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(251.607166 402.760965) rotate(-45)">reach</text>
+     </g>
+    </g>
+    <g id="xtick_6">
+     <g id="line2d_6">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="314.859831" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_6">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(303.092469 395.383742) rotate(-45)">the</text>
+     </g>
+    </g>
+    <g id="xtick_7">
+     <g id="line2d_7">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="358.967911" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_7">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(326.917412 415.666879) rotate(-45)">residency</text>
+     </g>
+    </g>
+    <g id="xtick_8">
+     <g id="line2d_8">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="403.075991" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_8">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(395.618224 391.074147) rotate(-45)">of</text>
+     </g>
+    </g>
+    <g id="xtick_9">
+     <g id="line2d_9">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="447.184071" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_9">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(435.416709 395.383742) rotate(-45)">the</text>
+     </g>
+    </g>
+    <g id="xtick_10">
+     <g id="line2d_10">
+      <g>
+       <use xlink:href="#mc16f6d9d97" x="491.292151" y="373.10427" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_10">
+      <text style="font-size: 9px; font-family: 'DejaVu Sans'; fill: #1b2430" transform="translate(463.858507 411.050024) rotate(-45)">minister</text>
+     </g>
+    </g>
+    <g id="text_11">
+     <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="292.805791" y="428.2089" transform="rotate(-0 292.805791 428.2089)">source tokens (encoder)</text>
+    </g>
+   </g>
+   <g id="matplotlib.axis_2">
+    <g id="ytick_1">
+     <g id="line2d_11">
+      <defs>
+       <path id="m6982b075b6" d="M 0 0 
+L -3.5 0 
+" style="stroke: #000000; stroke-width: 0.8"/>
+      </defs>
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="52.594591" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_12">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="56.203848" transform="rotate(-0 65.265391 56.203848)">Ich</text>
+     </g>
+    </g>
+    <g id="ytick_2">
+     <g id="line2d_12">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="101.903772" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_13">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="105.51303" transform="rotate(-0 65.265391 105.51303)">möchte</text>
+     </g>
+    </g>
+    <g id="ytick_3">
+     <g id="line2d_13">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="151.212953" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_14">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="154.822211" transform="rotate(-0 65.265391 154.822211)">die</text>
+     </g>
+    </g>
+    <g id="ytick_4">
+     <g id="line2d_14">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="200.522135" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_15">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="204.131393" transform="rotate(-0 65.265391 204.131393)">Residenz</text>
+     </g>
+    </g>
+    <g id="ytick_5">
+     <g id="line2d_15">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="249.831316" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_16">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="253.440574" transform="rotate(-0 65.265391 253.440574)">des</text>
+     </g>
+    </g>
+    <g id="ytick_6">
+     <g id="line2d_16">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="299.140497" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_17">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="302.749755" transform="rotate(-0 65.265391 302.749755)">Ministers</text>
+     </g>
+    </g>
+    <g id="ytick_7">
+     <g id="line2d_17">
+      <g>
+       <use xlink:href="#m6982b075b6" x="72.265391" y="348.449679" style="stroke: #000000; stroke-width: 0.8"/>
+      </g>
+     </g>
+     <g id="text_18">
+      <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: end; fill: #1b2430" x="65.265391" y="352.058937" transform="rotate(-0 65.265391 352.058937)">erreichen</text>
+     </g>
+    </g>
+    <g id="text_19">
+     <text style="font-size: 9.5px; font-family: 'DejaVu Sans'; text-anchor: middle; fill: #5b6472" x="14.418516" y="200.522135" transform="rotate(-90 14.418516 200.522135)">target tokens (decoder)</text>
+    </g>
+   </g>
+   <g id="patch_4">
+    <path d="M 72.265391 373.10427 
+L 72.265391 27.94 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_5">
+    <path d="M 513.346191 373.10427 
+L 513.346191 27.94 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_6">
+    <path d="M 72.265391 373.10427 
+L 513.346191 373.10427 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="patch_7">
+    <path d="M 72.265391 27.94 
+L 513.346191 27.94 
+" style="fill: none; stroke: #e4e2db; stroke-width: 0.8; stroke-linejoin: miter; stroke-linecap: square"/>
+   </g>
+   <g id="text_20">
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #c1553d" transform="translate(470.969811 368.517047)">word-order</text>
+    <text style="font-size: 8.5px; font-family: 'DejaVu Sans'; fill: #c1553d" transform="translate(473.920905 378.035188)">swap here</text>
+   </g>
+   <g id="text_21">
+    <!-- Attention weights $\alpha_{t,i}$: what the decoder looks at -->
+    <g style="fill: #1b2430" transform="translate(134.738291 15.94)">
+     <text>
+      <tspan x="0" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">A</tspan>
+      <tspan x="8.900146" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="14.397461" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="19.894775" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">e</tspan>
+      <tspan x="27.694336" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">n</tspan>
+      <tspan x="35.881348" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="41.378662" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">i</tspan>
+      <tspan x="45.320557" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">o</tspan>
+      <tspan x="53.221191" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">n</tspan>
+      <tspan x="61.408203" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="65.411865" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">w</tspan>
+      <tspan x="76.035889" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">e</tspan>
+      <tspan x="83.835449" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">i</tspan>
+      <tspan x="87.777344" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">g</tspan>
+      <tspan x="96.009277" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">h</tspan>
+      <tspan x="104.196289" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="109.693604" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">s</tspan>
+      <tspan x="116.538574" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="137.970996" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">:</tspan>
+      <tspan x="142.569873" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="146.573535" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">w</tspan>
+      <tspan x="157.197559" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">h</tspan>
+      <tspan x="165.38457" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">a</tspan>
+      <tspan x="173.144824" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="178.642139" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="182.645801" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="188.143115" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">h</tspan>
+      <tspan x="196.330127" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">e</tspan>
+      <tspan x="204.129687" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="208.13335" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">d</tspan>
+      <tspan x="216.365283" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">e</tspan>
+      <tspan x="224.164844" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">c</tspan>
+      <tspan x="230.981738" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">o</tspan>
+      <tspan x="238.882373" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">d</tspan>
+      <tspan x="247.114307" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">e</tspan>
+      <tspan x="254.913867" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">r</tspan>
+      <tspan x="260.585254" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="264.588916" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">l</tspan>
+      <tspan x="268.530811" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">o</tspan>
+      <tspan x="276.431445" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">o</tspan>
+      <tspan x="284.33208" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">k</tspan>
+      <tspan x="291.980029" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">s</tspan>
+      <tspan x="298.825" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430"> </tspan>
+      <tspan x="302.828662" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">a</tspan>
+      <tspan x="310.588916" y="-0.875" style="font-weight: 700; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="120.542236" y="-0.875" style="font-style: oblique; font-size: 11.5px; font-family: 'DejaVu Sans'; fill: #1b2430">α</tspan>
+      <tspan x="128.122803" y="1.09375" style="font-style: oblique; font-size: 8.05px; font-family: 'DejaVu Sans'; fill: #1b2430">t</tspan>
+      <tspan x="135.406323" y="1.09375" style="font-style: oblique; font-size: 8.05px; font-family: 'DejaVu Sans'; fill: #1b2430">i</tspan>
+      <tspan x="131.279126" y="1.09375" style="font-size: 8.05px; font-family: 'DejaVu Sans'; fill: #1b2430">,</tspan>
+     </text>
+    </g>
+   </g>
+  </g>
+ </g>
+ <defs>
+  <clipPath id="pdd7dccc561">
+   <rect x="72.265391" y="27.94" width="441.0808" height="345.16427"/>
+  </clipPath>
+ </defs>
+</svg>
+          <p class="caption"><b>Reading this heatmap:</b> darker cells mean the decoder (rows) is paying more attention to that source word (columns) when producing that output. Most of the weight sits on a diagonal — the two languages share word order — except where the red box marks a genuine word-order swap between the two languages, which the attention weights track automatically.</p>
+        </div>
+      </div>
+    </div>
+
+    <!-- 10 -->
+    <div class="stage" id="s10">
+      <div class="rail-col"><div class="node amber">10</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag v">Vision &amp; Sequence</p>
+        <h3>Segmentation &amp; Object Detection</h3>
+        <p class="plain">Three related but distinct tasks: <b>classification</b> asks "what's in this image," <b>segmentation</b> asks "which class does each individual pixel belong to," and <b>object detection</b> asks "where is each object, draw a box around it." Segmentation networks use an <b>encoder–decoder</b> ("hourglass") shape: shrink the image down through convolutions to understand <i>what</i> is there, then grow it back up to paint a label on every pixel, using skip connections to recover the fine <i>where</i> detail lost during shrinking (this is exactly what U-Net does). Object detection evolved from painfully slow sliding windows, through the R-CNN family (each version removing one more bottleneck), to single-shot detectors like YOLO that predict every box in one forward pass.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Fully Convolutional Network (FCN)</td><td class="desc">Replace the final classifier with convolutions, so output is a full spatial map, not one label.</td></tr>
+            <tr><td class="term">Encoder–decoder / U-Net / SegNet</td><td class="desc">Shrink then regrow spatial resolution, using skip connections to keep fine detail.</td></tr>
+            <tr><td class="term">Upsampling (transpose conv / unpooling)</td><td class="desc">The decoder's way of growing a small feature map back to full image size.</td></tr>
+            <tr><td class="term">Dilated (atrous) convolution</td><td class="desc">Spread out a filter's sample points to see a wider area without adding parameters.</td></tr>
+            <tr><td class="term">Sliding window</td><td class="desc">The brute-force original approach: test every possible box location — very slow.</td></tr>
+            <tr><td class="term">R-CNN → Fast → Faster R-CNN</td><td class="desc">Each version shares more computation across proposed boxes, removing a bottleneck each time.</td></tr>
+            <tr><td class="term">YOLO / single-shot detectors</td><td class="desc">Predict all boxes and classes in one single forward pass — real-time capable.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 11 -->
+    <div class="stage" id="s11">
+      <div class="rail-col"><div class="node rose">11</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag p">Learning Paradigms</p>
+        <h3>Deep Reinforcement Learning</h3>
+        <p class="plain">A completely different setup: there's no fixed dataset of labeled examples. Instead, an <b>agent</b> takes actions inside an <b>environment</b>, receives a <b>reward</b> signal, and must learn — purely through trial and error — which actions lead to the best long-term payoff. This is formalized as a <b>Markov Decision Process</b>: the next state only depends on the current state and action, not the whole history. <b>Deep Q-Learning</b> (famous for learning to play Atari games from raw pixels) uses a neural network to estimate the long-term value of every possible action, then two engineering tricks — a slowly-updated <i>target network</i> and a <i>replay memory</i> of past experiences — to keep training from spiraling out of control.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>s</code> = state &nbsp; <code>a</code> = action &nbsp; <code>r</code> = reward &nbsp; <code>π</code> (pi) = policy, the agent's strategy for picking actions &nbsp; <code>γ</code> (gamma) = discount factor (0 to 1) — how much future reward matters vs. immediate reward &nbsp; <code>V(s)</code> = value of being in state s &nbsp; <code>Q(s,a)</code> = value of taking action a while in state s
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Markov Decision Process (MDP)</td><td class="desc">The formal state → action → reward → next-state loop that RL problems are framed as.</td></tr>
+            <tr><td class="term">Value function / Bellman equation</td><td class="desc">"How good is this state" defined recursively in terms of the next state's value.</td></tr>
+            <tr><td class="term">Policy iteration</td><td class="desc">Alternate between scoring the current strategy and improving it, until it stops changing.</td></tr>
+            <tr><td class="term">Q-learning</td><td class="desc">Learn the action-value function directly, without needing to know the environment's rules in advance.</td></tr>
+            <tr><td class="term">Deep Q-Network (DQN)</td><td class="desc">Use a neural network (fed raw pixels) to estimate Q-values — the system that mastered Atari games.</td></tr>
+            <tr><td class="term">Target network / experience replay</td><td class="desc">Two stability tricks: freeze a copy of the network briefly, and learn from a shuffled memory of past experiences rather than only the most recent one.</td></tr>
+            <tr><td class="term">Policy gradient / REINFORCE</td><td class="desc">Directly adjust the policy's parameters using ordinary backpropagation.</td></tr>
+            <tr><td class="term">AlphaGo / AlphaZero</td><td class="desc">Combined deep RL with tree search to beat professional Go players, then generalized to other games via self-play alone.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 12 -->
+    <div class="stage" id="s12">
+      <div class="rail-col"><div class="node rose">12</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag p">Learning Paradigms</p>
+        <h3>Unsupervised Deep Learning</h3>
+        <p class="plain">Learning without any labels — finding structure the data has on its own. An <b>autoencoder</b> squeezes the input down to a small compressed code, then tries to reconstruct the original from just that code — forcing the compressed code to capture only what's essential. A <b>Variational Autoencoder (VAE)</b> makes that compressed code probabilistic (a small cloud of possibility instead of one fixed point), which makes it possible to sample entirely new, never-seen data from it. A <b>Generative Adversarial Network (GAN)</b> takes a completely different approach: pit two networks against each other — a generator trying to fake realistic data, and a discriminator trying to catch the fakes — like an art forger versus an art critic, each one improving because of the other.</p>
+        <div class="notation">
+          <span class="label">Notation you'll see</span>
+          <code>z</code> = the compressed "latent" code &nbsp; <code>μ, σ</code> (mu, sigma) = the mean and spread of the latent distribution a VAE learns &nbsp; <code>KL(p,q)</code> = a measure of how different two probability distributions are &nbsp; <code>θ^G, θ^D</code> = generator / discriminator parameters &nbsp; <code>p_data, p_z</code> = the real-data distribution and the noise distribution fed to the generator
+        </div>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Autoencoder</td><td class="desc">Encoder compresses input → decoder reconstructs it; the bottleneck forces useful compression.</td></tr>
+            <tr><td class="term">Sparse autoencoder</td><td class="desc">Adds a penalty encouraging most of the compressed code's values to be near zero.</td></tr>
+            <tr><td class="term">Variational Autoencoder (VAE)</td><td class="desc">Makes the latent code a probability distribution, enabling new-sample generation.</td></tr>
+            <tr><td class="term">Reparametrization trick</td><td class="desc">A math trick that lets gradients flow through a random sampling step during training.</td></tr>
+            <tr><td class="term">GAN (Generative Adversarial Network)</td><td class="desc">Generator vs. discriminator, trained against each other until fakes are indistinguishable from real.</td></tr>
+            <tr><td class="term">Minimax game</td><td class="desc">The tug-of-war training objective: generator minimizes, discriminator maximizes, the same expression.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 13 -->
+    <div class="stage" id="s13">
+      <div class="rail-col"><div class="node rose">13</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag p">Learning Paradigms</p>
+        <h3>Weakly-Supervised Learning</h3>
+        <p class="plain">Getting pixel-perfect labels (exact outlines of every object) is expensive and slow. Weakly-supervised learning works with cheaper, coarser labels instead — like just "this image contains a cat," with no location information at all — and uses clever tricks to still recover fairly precise localization. The core trick: repurpose a network trained only for whole-image classification, and look at which regions of its internal feature maps were most responsible for that classification score.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Strong vs. weak supervision</td><td class="desc">Pixel masks / boxes (strong) vs. only whole-image tags (weak).</td></tr>
+            <tr><td class="term">Priors &amp; hints</td><td class="desc">Extra assumptions (typical object shape, size) that make weak labels workable.</td></tr>
+            <tr><td class="term">Global Average Pooling (GAP)</td><td class="desc">Averaging each feature map to one number, right before the final classifier layer.</td></tr>
+            <tr><td class="term">Class Activation Map (CAM)</td><td class="desc">Reusing the classifier's own weights to turn its feature maps into a rough localization heatmap — with no location labels ever provided.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 14 -->
+    <div class="stage" id="s14">
+      <div class="rail-col"><div class="node rose">14</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag p">Learning Paradigms</p>
+        <h3>Self-Supervised Learning</h3>
+        <p class="plain">A clever way to get "free" labels straight out of the raw data itself, with zero human annotation. You invent a <b>pretext task</b> — predict the missing piece, the next frame, whether two crops came from the same image — that the data can label automatically. The network learns genuinely useful features solving this made-up task, and those features are then reused for the task you actually care about. <b>Contrastive learning</b> is the currently dominant flavor: train the network so that two different views of the same thing end up with similar representations, while different things end up far apart.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Pretext task</td><td class="desc">A made-up prediction task whose "labels" come free from the data's own structure.</td></tr>
+            <tr><td class="term">Generation-based methods</td><td class="desc">Predict missing or future content directly (e.g. inpainting, future-frame prediction).</td></tr>
+            <tr><td class="term">Context-based methods</td><td class="desc">Predict spatial relationships — e.g. the relative position of two image patches.</td></tr>
+            <tr><td class="term">Contrastive learning / InfoNCE loss</td><td class="desc">Pull together representations of two views of the same sample; push apart representations of different samples.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 15 -->
+    <div class="stage" id="s15">
+      <div class="rail-col"><div class="node violet">15</div><div class="rail-line"></div></div>
+      <div class="stage-content">
+        <p class="stage-tag s">Specialized Topics</p>
+        <h3>Graph Deep Learning</h3>
+        <p class="plain">Not all data is a neat grid (images) or ordered sequence (text) — social networks, molecules, and road networks are naturally a <b>graph</b>: a set of nodes connected by edges. Graph Convolutional Networks generalize the convolution idea to this irregular structure: instead of "average my neighboring pixels," each node updates its representation by aggregating information from its neighboring <i>nodes</i>, layer by layer, so information gradually spreads across the whole graph.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Graph = (nodes, edges)</td><td class="desc">The basic structure: a set of points and the connections between them.</td></tr>
+            <tr><td class="term">Graph Laplacian</td><td class="desc">A matrix encoding the graph's connectivity, used to define "smoothness" and convolution on a graph.</td></tr>
+            <tr><td class="term">Spectral vs. spatial convolution</td><td class="desc">Two mathematical routes to the same goal — filtering signals defined on a graph.</td></tr>
+            <tr><td class="term">Graph Convolutional Network (GCN)</td><td class="desc">Each layer mixes every node's features with its direct neighbors', then applies a learned transform.</td></tr>
+            <tr><td class="term">GraphSAGE</td><td class="desc">Learns to aggregate a sampled neighborhood, scaling graph learning to huge graphs.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+    <!-- 16 -->
+    <div class="stage" id="s16">
+      <div class="rail-col"><div class="node violet">16</div></div>
+      <div class="stage-content">
+        <p class="stage-tag s">Specialized Topics</p>
+        <h3>Known Operator Learning</h3>
+        <p class="plain">This one is a signature research theme of your own professor (Andreas Maier). The idea: if you already know the <i>exact</i> mathematical formula for part of a problem — for instance, the physics of how a CT scanner reconstructs an image from X-ray projections — don't make the network re-learn that from scratch. Instead, bake the known, exact formula directly into the network as a fixed (non-trainable, or partially-trainable) layer, and let the network only learn what's genuinely unknown around it. This uses far fewer trainable parameters, stays more interpretable, and is provably at least as accurate as learning everything blindly — sometimes called <b>precision learning</b>.</p>
+        <table>
+          <thead><tr><th>Term</th><th>Plain meaning</th></tr></thead>
+          <tbody>
+            <tr><td class="term">Known operator</td><td class="desc">A piece of the problem you already have an exact, hand-derived formula for.</td></tr>
+            <tr><td class="term">Precision learning</td><td class="desc">Embedding that known formula as a fixed network layer instead of learning it from data.</td></tr>
+            <tr><td class="term">Filtered back-projection as a layer</td><td class="desc">A 100-year-old exact CT-reconstruction formula, reimplemented as fixed convolution + fixed matrix-multiply layers.</td></tr>
+            <tr><td class="term">Variational networks / unrolled optimization</td><td class="desc">Turning an iterative classical algorithm into a fixed number of trainable network layers, one iteration per layer.</td></tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+
+  </div>
+
+  <div class="glossary-section" id="glossary">
+    <h2>Equation Symbol Glossary</h2>
+    <p class="sub-lede">Every symbol from across all 16 topics, grouped by what it's for. When you hit a symbol in a slide and freeze — check here first.</p>
+
+    <div class="glossary-group">
+      <h4>The basic building blocks</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">x</td><td class="name">input</td><td class="desc">A single example, or a vector of its features.</td></tr>
+          <tr><td class="sym">y</td><td class="name">label / target</td><td class="desc">The true, correct answer for that example.</td></tr>
+          <tr><td class="sym">ŷ</td><td class="name">y-hat</td><td class="desc">The network's prediction (as opposed to the true y).</td></tr>
+          <tr><td class="sym">w</td><td class="name">weights</td><td class="desc">The trainable numbers the network adjusts during learning.</td></tr>
+          <tr><td class="sym">b</td><td class="name">bias</td><td class="desc">An extra trainable offset added before the activation.</td></tr>
+          <tr><td class="sym">θ</td><td class="name">theta</td><td class="desc">A general stand-in for "all the trainable parameters" (sometimes used instead of w).</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glossary-group">
+      <h4>Calculus &amp; optimization</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">∇</td><td class="name">nabla / gradient</td><td class="desc">The vector of slopes — one per weight — pointing in the direction the loss increases fastest. You step opposite to it.</td></tr>
+          <tr><td class="sym">∂L/∂w</td><td class="name">partial derivative</td><td class="desc">"If I nudge this one weight slightly, how much does the loss change?"</td></tr>
+          <tr><td class="sym">η</td><td class="name">eta / learning rate</td><td class="desc">How big a step you take opposite the gradient at each update.</td></tr>
+          <tr><td class="sym">L(w)</td><td class="name">loss function</td><td class="desc">The single number measuring how wrong the network is, written as a function of the weights.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glossary-group">
+      <h4>Greek letters used as hyperparameters (context matters!)</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">α</td><td class="name">alpha</td><td class="desc">A general "small coefficient" — the negative-side slope in Leaky ReLU, a significance level in stats, or a step size in an update rule, depending on context.</td></tr>
+          <tr><td class="sym">β</td><td class="name">beta</td><td class="desc">Precision (1/variance) in the Gaussian regression-loss derivation.</td></tr>
+          <tr><td class="sym">μ</td><td class="name">mu</td><td class="desc">Momentum coefficient in optimizers (typically 0.9) — how much of the previous update direction to keep.</td></tr>
+          <tr><td class="sym">ρ</td><td class="name">rho</td><td class="desc">Decay rate in RMSProp / Adadelta — how fast the running average of past gradients "forgets."</td></tr>
+          <tr><td class="sym">γ</td><td class="name">gamma</td><td class="desc">Discount factor in reinforcement learning (0–1) — how much future reward counts vs. immediate reward.</td></tr>
+          <tr><td class="sym">σ</td><td class="name">sigma</td><td class="desc">Either the sigmoid function, or standard deviation — σ² then means variance.</td></tr>
+          <tr><td class="sym">λ</td><td class="name">lambda</td><td class="desc">The strength of a regularization penalty added to the loss.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glossary-group">
+      <h4>Probability &amp; statistics</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">p(y|x)</td><td class="name">conditional probability</td><td class="desc">"The probability of label y, given that you've observed input x."</td></tr>
+          <tr><td class="sym">𝒩(μ,σ²)</td><td class="name">Gaussian / normal distribution</td><td class="desc">The classic bell curve, defined by its mean μ and variance σ².</td></tr>
+          <tr><td class="sym">KL(p,q)</td><td class="name">KL divergence</td><td class="desc">A number measuring how different probability distribution p is from q — 0 means identical.</td></tr>
+          <tr><td class="sym">𝔼[·]</td><td class="name">expectation</td><td class="desc">"The average value of this, if you repeated the random process many times."</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glossary-group">
+      <h4>Sizes &amp; counts</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">M</td><td class="name">number of samples</td><td class="desc">How many training examples are in the dataset (or mini-batch).</td></tr>
+          <tr><td class="sym">K</td><td class="name">number of classes</td><td class="desc">How many categories the classifier is choosing between.</td></tr>
+          <tr><td class="sym">d_k</td><td class="name">key dimension</td><td class="desc">The length of the key/query vectors in attention — used to rescale scores so they don't grow too large.</td></tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="glossary-group">
+      <h4>Reinforcement learning specific</h4>
+      <table class="sym-table">
+        <thead><tr><th>Symbol</th><th>Name</th><th>Plain meaning</th></tr></thead>
+        <tbody>
+          <tr><td class="sym">s, a, r</td><td class="name">state, action, reward</td><td class="desc">Where the agent is, what it did, and what it got for doing it.</td></tr>
+          <tr><td class="sym">π</td><td class="name">pi / policy</td><td class="desc">The agent's strategy — a rule for picking an action given a state.</td></tr>
+          <tr><td class="sym">V(s)</td><td class="name">state-value function</td><td class="desc">"How good is it to be in this state, in the long run?"</td></tr>
+          <tr><td class="sym">Q(s,a)</td><td class="name">action-value function</td><td class="desc">"How good is it to take this specific action in this state?"</td></tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <footer>
+    Built from the 16 lecture-note files you uploaded (FAU LME Deep Learning, Prof. Andreas Maier). Charts use illustrative synthetic data to show each concept's shape, not real experimental results from the course.
+  </footer>
+
+</div>
+</body>
+</html>

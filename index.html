@@ -1,0 +1,589 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Thanush Raj Uma Babu — Data Science & ML</title>
+<meta name="description" content="Thanush Raj Uma Babu — M.Sc. Data Science at FAU Erlangen-Nürnberg. Machine learning, deep learning, recommender systems. Open to Werkstudent positions in Germany.">
+<meta property="og:title" content="Thanush Raj Uma Babu — Data Science & ML">
+<meta property="og:description" content="M.Sc. Data Science student at FAU Erlangen-Nürnberg. Published researcher in recommender systems. Open to Werkstudent opportunities.">
+<meta property="og:type" content="website">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600;1,8..60,400&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="assets/style.css">
+<style>
+/* ─── Hero ─── */
+.hero{padding:150px 0 64px;border-bottom:1px solid var(--border);}
+.hero-eyebrow{font-family:var(--sans);font-size:12px;font-weight:500;letter-spacing:0.14em;text-transform:uppercase;color:var(--faint);margin-bottom:18px;}
+.hero h1{font-family:var(--sans);font-size:clamp(38px,6vw,58px);font-weight:700;color:var(--ink);letter-spacing:-0.03em;line-height:1.08;margin-bottom:20px;}
+.hero-sub{font-size:19px;color:var(--text-secondary);max-width:600px;line-height:1.65;margin-bottom:10px;}
+.hero-location{font-family:var(--sans);font-size:13.5px;color:var(--faint);margin-bottom:34px;display:flex;align-items:center;gap:6px;}
+.hero-actions{display:flex;gap:12px;flex-wrap:wrap;align-items:center;}
+.hero-status{font-family:var(--sans);font-size:13.5px;color:var(--text-secondary);}
+.hero-status::before{content:'';display:inline-block;width:7px;height:7px;border-radius:50%;background:var(--ink);margin-right:8px;vertical-align:1px;}
+
+/* ─── NN widget: monochrome ─── */
+.nn-section{padding:64px 0;border-bottom:1px solid var(--border);}
+.nn-frame{border:1px solid var(--border);border-radius:var(--radius-lg);padding:20px 20px 0;overflow:hidden;background:#fff;}
+.nn-svg-wrap{overflow-x:auto;}
+.nn-svg-wrap svg{min-width:760px;width:100%;height:auto;display:block;}
+.nn-node{fill:#fff;stroke:#C4C4C4;stroke-width:1.4;transition:stroke .2s, fill .2s;}
+.nn-edge{stroke:#EBEBEB;stroke-width:1;fill:none;transition:stroke .2s, stroke-width .2s;}
+.nn-edge.flow{stroke-dasharray:4 8;animation:flowdash 1.8s linear infinite;}
+@keyframes flowdash{to{stroke-dashoffset:-24;}}
+.nn-label{font-family:var(--mono);font-size:11px;fill:var(--faint);text-anchor:middle;}
+.nn-title-label{font-family:var(--sans);font-size:11px;font-weight:600;text-anchor:middle;letter-spacing:1.5px;fill:var(--faint);}
+.nn-layer{cursor:pointer;}
+.nn-layer:focus{outline:none;}
+.nn-layer.active .nn-node,.nn-layer:hover .nn-node{stroke:var(--ink);fill:#EFEFEF;}
+.nn-layer.active .nn-label,.nn-layer:hover .nn-label{fill:var(--ink);font-weight:600;}
+.nn-dot-node{fill:var(--ink);stroke:var(--ink);}
+.nn-info{border-top:1px solid var(--border);margin:16px -20px 0;padding:18px 24px;background:#FAFAFA;min-height:86px;display:flex;gap:14px;align-items:flex-start;}
+.nn-info-icon{width:34px;height:34px;border-radius:99px;background:#EFEFEF;color:var(--ink);display:flex;align-items:center;justify-content:center;font-family:var(--mono);font-weight:500;font-size:12px;flex-shrink:0;}
+.nn-info-title{font-family:var(--sans);font-size:14px;font-weight:600;margin-bottom:2px;color:var(--ink);}
+.nn-info-text{font-size:14.5px;color:var(--text-secondary);line-height:1.65;max-width:760px;}
+
+/* ─── About ─── */
+.about-grid{display:grid;grid-template-columns:1fr 260px;gap:56px;align-items:start;}
+.about-text p{margin-bottom:18px;color:var(--text);line-height:1.75;font-size:16.5px;}
+.about-text p+p{color:var(--text-secondary);}
+.lang-row{display:flex;gap:20px;margin-top:20px;font-family:var(--sans);font-size:13.5px;color:var(--text-secondary);}
+.lang-row .level{color:var(--ink);font-weight:500;}
+.about-stats{display:grid;gap:0;border-top:1px solid var(--border);}
+.stat-card{padding:16px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;align-items:baseline;}
+.stat-num{font-family:var(--sans);font-size:20px;font-weight:700;color:var(--ink);}
+.stat-label{font-family:var(--sans);font-size:13px;color:var(--text-secondary);}
+
+/* ─── Documents ─── */
+.doc-list{max-width:var(--prose-w);border-top:1px solid var(--border);}
+.doc-row{display:flex;align-items:center;gap:16px;padding:20px 4px;border-bottom:1px solid var(--border);transition:opacity .2s;}
+.doc-row:hover .doc-title{text-decoration:underline;text-underline-offset:3px;}
+.doc-title{font-family:var(--sans);font-size:15.5px;font-weight:600;color:var(--ink);}
+.doc-meta{font-family:var(--sans);font-size:13px;color:var(--faint);margin-top:2px;}
+.doc-dl{margin-left:auto;color:var(--faint);flex-shrink:0;}
+
+/* ─── Explore: table of contents ─── */
+.explore-list{border-top:1px solid var(--border);}
+.explore-row{display:flex;align-items:baseline;gap:24px;padding:26px 4px;border-bottom:1px solid var(--border);}
+.explore-row:hover .explore-title{text-decoration:underline;text-underline-offset:4px;}
+.explore-num{font-family:var(--mono);font-size:13px;color:var(--faint);min-width:28px;}
+.explore-title{font-family:var(--sans);font-size:20px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+.explore-desc{font-size:15px;color:var(--text-secondary);margin-top:4px;max-width:560px;}
+.explore-count{margin-left:auto;font-family:var(--sans);font-size:12.5px;color:var(--faint);flex-shrink:0;}
+
+/* ─── Experience ─── */
+.exp-lens{border-left:2px solid var(--ink);padding:4px 0 4px 20px;margin-bottom:40px;font-size:16px;color:var(--text);line-height:1.75;max-width:var(--prose-w);font-style:italic;}
+.exp-lens strong{font-style:normal;font-family:var(--sans);font-size:13px;letter-spacing:0.08em;text-transform:uppercase;color:var(--faint);display:block;margin-bottom:6px;font-weight:500;}
+.timeline{border-top:1px solid var(--border);max-width:820px;}
+.timeline-item{padding:28px 0;border-bottom:1px solid var(--border);}
+.timeline-header{display:flex;justify-content:space-between;align-items:baseline;gap:16px;margin-bottom:12px;flex-wrap:wrap;}
+.timeline-role{font-family:var(--sans);font-size:18px;font-weight:700;color:var(--ink);letter-spacing:-0.01em;}
+.timeline-company{font-size:15px;color:var(--text-secondary);font-style:italic;margin-top:2px;}
+.timeline-meta{text-align:right;flex-shrink:0;}
+.timeline-date{font-family:var(--sans);font-size:13px;color:var(--faint);}
+.timeline-location{font-family:var(--sans);font-size:12.5px;color:var(--faint);margin-top:2px;}
+.timeline-points{list-style:none;padding:0;}
+.timeline-points li{position:relative;padding-left:18px;margin-bottom:9px;font-size:15.5px;color:var(--text-secondary);line-height:1.7;}
+.timeline-points li::before{content:'—';position:absolute;left:0;color:#C4C4C4;}
+
+/* ─── Education / skills / certs ─── */
+.edu-grid{max-width:820px;border-top:1px solid var(--border);}
+.edu-card{padding:24px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:20px;flex-wrap:wrap;}
+.edu-degree{font-family:var(--sans);font-size:17px;font-weight:700;color:var(--ink);}
+.edu-spec{font-size:14.5px;color:var(--text-secondary);font-style:italic;margin:2px 0 6px;}
+.edu-school{font-size:15px;color:var(--text-secondary);}
+.edu-meta{font-family:var(--sans);font-size:13px;color:var(--faint);text-align:right;}
+.skills-list{max-width:820px;border-top:1px solid var(--border);}
+.skill-line{display:flex;gap:24px;padding:16px 0;border-bottom:1px solid var(--border);align-items:baseline;}
+.skill-cat{font-family:var(--sans);font-size:13px;font-weight:600;color:var(--ink);min-width:190px;letter-spacing:0.02em;}
+.skill-items{font-size:15px;color:var(--text-secondary);}
+.cert-line{font-size:15px;color:var(--text-secondary);padding:14px 0;border-bottom:1px solid var(--border);display:flex;justify-content:space-between;gap:16px;flex-wrap:wrap;}
+.cert-line b{font-family:var(--sans);font-weight:600;color:var(--ink);font-size:14.5px;}
+.cert-issuer{font-family:var(--sans);font-size:13px;color:var(--faint);}
+
+/* ─── Publication ─── */
+.pub-card{border:1px solid var(--border);border-radius:var(--radius-lg);padding:36px;max-width:820px;}
+.pub-title{font-family:var(--sans);font-size:22px;font-weight:700;letter-spacing:-0.015em;margin:10px 0 8px;line-height:1.3;color:var(--ink);}
+.pub-venue{font-family:var(--sans);font-size:13.5px;color:var(--faint);margin-bottom:18px;}
+.pub-venue strong{color:var(--text-secondary);font-weight:500;}
+.pub-actions{display:flex;gap:10px;margin-top:22px;flex-wrap:wrap;}
+
+@media(max-width:768px){
+  .about-grid{grid-template-columns:1fr;gap:32px;}
+  .hero h1{font-size:38px;}
+  .hero-actions .btn{width:100%;justify-content:center;}
+  .explore-row{flex-wrap:wrap;}
+  .explore-count{margin-left:52px;}
+  .edu-meta{text-align:left;}
+  .skill-line{flex-direction:column;gap:4px;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav" id="nav">
+  <div class="nav-inner">
+    <a href="index.html" class="nav-logo">Thanush Raj</a>
+    <div class="nav-links" id="navLinks">
+      <a href="projects/index.html">Projects</a>
+      <a href="blog/index.html">Blog</a>
+      <a href="notes/index.html">Paper Notes</a>
+      <a href="opensource/index.html">Open Source</a>
+      <a href="#about">About</a>
+      <a href="#contact">Contact</a>
+      <a href="#contact" class="werkstudent-badge">Open to Werkstudent</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<!-- ═══ Hero ═══ -->
+<section class="hero">
+  <div class="wrap">
+    <p class="hero-eyebrow">Data Science · Machine Learning · AI</p>
+    <h1>Thanush Raj Uma Babu</h1>
+    <p class="hero-sub">M.Sc. Data Science student at FAU Erlangen-Nürnberg, specialising in AI &amp; Machine Learning. Published researcher in recommender systems, with 2.5 years of enterprise data engineering behind me.</p>
+    <p class="hero-location">
+      <svg width="13" height="13" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 1118 0z"/><circle cx="12" cy="10" r="3"/></svg>
+      Erlangen, Germany
+    </p>
+    <div class="hero-actions">
+      <a href="projects/index.html" class="btn btn-primary">View projects</a>
+      <a href="assets/Thanush_Raj_CV.pdf" download class="btn btn-outline">Download CV</a>
+      <span class="hero-status">Open to Werkstudent positions in Germany</span>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Interactive NN Widget ═══ -->
+<section class="nn-section">
+  <div class="wrap">
+    <p class="section-label">Interactive</p>
+    <h2 class="section-title">The model behind my paper</h2>
+    <p class="section-desc">The dual-network architecture from my published recommendation system (NCECA 2023) — the same trained network that powers the <a href="projects/recommender-demo.html" style="text-decoration:underline;text-underline-offset:3px;">live demo</a>. Hover over, or tap, any layer to see what it does.</p>
+    <div class="nn-frame">
+      <div class="nn-svg-wrap">
+      <svg viewBox="0 0 920 400" xmlns="http://www.w3.org/2000/svg" role="img" aria-label="Interactive diagram of a dual neural network recommender: a user network and a movie network each map features to a 32-dimensional embedding, combined with a dot product to predict a rating.">
+        <text x="215" y="30" class="nn-title-label">USER NETWORK</text>
+        <text x="705" y="30" class="nn-title-label">MOVIE NETWORK</text>
+        <g id="edges"></g>
+        <g id="layers"></g>
+        <g class="nn-layer" id="layer-dot" tabindex="0">
+          <circle cx="460" cy="200" r="26" class="nn-dot-node"></circle>
+          <text x="460" y="206" text-anchor="middle" font-family="JetBrains Mono, monospace" font-size="15" font-weight="600" fill="#fff">·</text>
+          <text x="460" y="252" class="nn-label">dot product</text>
+          <text x="460" y="270" class="nn-label" font-weight="600">ŷ = v_u · v_m</text>
+        </g>
+      </svg>
+      </div>
+      <div class="nn-info" id="nnInfo">
+        <div class="nn-info-icon" id="nnInfoIcon">?</div>
+        <div>
+          <div class="nn-info-title" id="nnInfoTitle">Explore the architecture</div>
+          <div class="nn-info-text" id="nnInfoText">Hover over any layer of either network to see its role. Two towers learn embeddings for users and movies separately — then a single dot product predicts the rating.</div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ About ═══ -->
+<section class="section" id="about">
+  <div class="wrap">
+    <p class="section-label">About</p>
+    <h2 class="section-title">A bit about me</h2>
+    <div style="height:24px;"></div>
+    <div class="about-grid">
+      <div class="about-text">
+        <p>I'm a Data Science graduate student at Friedrich-Alexander-Universität Erlangen-Nürnberg, specialising in Artificial Intelligence and Machine Learning. I'm drawn to problems at the intersection of deep learning, recommender systems, and responsible AI.</p>
+        <p>Before starting my Master's, I spent two and a half years at Kyndryl as a Technical Engineer, managing ETL batch workflows across four enterprise clients at 99.9% pipeline reliability. That experience taught me to think carefully about data integrity, documentation, and ownership of unfamiliar problems.</p>
+        <p>During my Bachelor's at SRM Institute of Science and Technology, I built and published a content-based recommendation system at NCECA 2023 using dual neural networks with a custom cost function and L2 regularisation. I'm currently exploring machine unlearning — how models can forget data verifiably, and how unlearning interacts with fairness.</p>
+        <div class="lang-row">
+          <span>English <span class="level">C1</span></span>
+          <span>German <span class="level">A2 · improving</span></span>
+        </div>
+      </div>
+      <div class="about-stats">
+        <div class="stat-card"><span class="stat-label">Published paper</span><span class="stat-num">1</span></div>
+        <div class="stat-card"><span class="stat-label">Years in industry</span><span class="stat-num">2.5</span></div>
+        <div class="stat-card"><span class="stat-label">Certifications</span><span class="stat-num">4</span></div>
+        <div class="stat-card"><span class="stat-label">Pipeline reliability</span><span class="stat-num">99.9%</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Documents ═══ -->
+<section class="section alt" id="documents">
+  <div class="wrap">
+    <p class="section-label">Documents</p>
+    <h2 class="section-title">CV &amp; cover letter</h2>
+    <p class="section-desc">One-click downloads for recruiters — always the latest version.</p>
+    <div class="doc-list">
+      <a href="assets/Thanush_Raj_CV.pdf" download class="doc-row">
+        <div>
+          <div class="doc-title">Curriculum Vitae</div>
+          <div class="doc-meta">PDF · updated July 2026</div>
+        </div>
+        <svg class="doc-dl" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      </a>
+      <a href="assets/Thanush_Raj_Cover_Letter.pdf" download class="doc-row">
+        <div>
+          <div class="doc-title">Cover Letter</div>
+          <div class="doc-meta">PDF · Werkstudent, general</div>
+        </div>
+        <svg class="doc-dl" width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"/></svg>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Explore ═══ -->
+<section class="section" id="explore">
+  <div class="wrap">
+    <p class="section-label">Explore</p>
+    <h2 class="section-title">What I'm working on</h2>
+    <p class="section-desc">Projects, writing, research notes, and open-source work — each in its own space.</p>
+    <div class="explore-list">
+      <a href="projects/index.html" class="explore-row">
+        <span class="explore-num">01</span>
+        <div>
+          <div class="explore-title">Projects</div>
+          <p class="explore-desc">Working demos, not just descriptions — starting with my published recommendation model running live in the browser.</p>
+        </div>
+        <span class="explore-count">1 live demo</span>
+      </a>
+      <a href="blog/index.html" class="explore-row">
+        <span class="explore-num">02</span>
+        <div>
+          <div class="explore-title">Blog</div>
+          <p class="explore-desc">Long-form guides breaking down deep learning and machine learning from the ground up — written while I learn them myself.</p>
+        </div>
+        <span class="explore-count">1 series live</span>
+      </a>
+      <a href="notes/index.html" class="explore-row">
+        <span class="explore-num">03</span>
+        <div>
+          <div class="explore-title">Paper Notes</div>
+          <p class="explore-desc">Short, honest notes on ML papers I read — one core idea, why it matters, and one question I'm left with.</p>
+        </div>
+        <span class="explore-count">Updated weekly</span>
+      </a>
+      <a href="opensource/index.html" class="explore-row">
+        <span class="explore-num">04</span>
+        <div>
+          <div class="explore-title">Open Source</div>
+          <p class="explore-desc">Documenting my path into open-source contribution — how I pick issues, what I learn, and every PR along the way.</p>
+        </div>
+        <span class="explore-count">Journey log</span>
+      </a>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Experience ═══ -->
+<section class="section alt" id="experience">
+  <div class="wrap">
+    <p class="section-label">Experience</p>
+    <h2 class="section-title">Where I've worked</h2>
+    <div style="height:24px;"></div>
+    <div class="exp-lens">
+      <strong>Why this matters for ML</strong>
+      Running batch pipelines at 99.9% reliability for four enterprise clients taught me what data quality failures actually look like in production — silent schema drift, jobs that "succeed" with corrupt data, migrations that break assumptions. It's the perspective I bring to every ML system I build: models are only as trustworthy as the pipelines feeding them.
+    </div>
+    <div class="timeline">
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <div class="timeline-role">Technical Engineer</div>
+            <div class="timeline-company">Kyndryl India — Infrastructure Operations</div>
+          </div>
+          <div class="timeline-meta">
+            <div class="timeline-date">Sep 2023 – Mar 2026</div>
+            <div class="timeline-location">Bangalore, India</div>
+          </div>
+        </div>
+        <ul class="timeline-points">
+          <li>Led end-to-end transition of Ethniki Insurance onto Kyndryl's digital workplace, attending leadership calls and reporting progress directly to delivery managers.</li>
+          <li>Managed and monitored ETL batch workflows and scheduled jobs across 4 enterprise clients (Honda, TATA Steel, ASR, Ethniki), maintaining 99.9% pipeline reliability.</li>
+          <li>Mentored 4 junior engineers to full operational independence and coordinated cross-team handover during a large-scale migration.</li>
+          <li>Oversaw system lifecycle, upgrades, and migrations with minimal downtime across mainframe environments.</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <div class="timeline-role">Marketing Analyst Intern</div>
+            <div class="timeline-company">Lynkread</div>
+          </div>
+          <div class="timeline-meta">
+            <div class="timeline-date">Aug 2022 – Jan 2023</div>
+            <div class="timeline-location">India</div>
+          </div>
+        </div>
+        <ul class="timeline-points">
+          <li>Conducted data analysis to identify customer segments on LinkedIn, developing targeted content strategies to optimise lead generation.</li>
+          <li>Analysed engagement metrics to evaluate content performance and improve audience interaction across digital platforms.</li>
+        </ul>
+      </div>
+      <div class="timeline-item">
+        <div class="timeline-header">
+          <div>
+            <div class="timeline-role">Analytics Intern</div>
+            <div class="timeline-company">PK Innovatives</div>
+          </div>
+          <div class="timeline-meta">
+            <div class="timeline-date">Mar 2022 – Aug 2022</div>
+            <div class="timeline-location">India</div>
+          </div>
+        </div>
+        <ul class="timeline-points">
+          <li>Developed and optimised dashboards using SQL and Tableau, streamlining tracking of key performance metrics.</li>
+          <li>Enhanced data integrity by implementing robust cleaning and validation procedures for advanced model analyses.</li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Education ═══ -->
+<section class="section" id="education">
+  <div class="wrap">
+    <p class="section-label">Education</p>
+    <h2 class="section-title">Academic background</h2>
+    <div style="height:24px;"></div>
+    <div class="edu-grid">
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">M.Sc. in Data Science</div>
+          <div class="edu-spec">Specialisation: AI &amp; Machine Learning</div>
+          <div class="edu-school">Friedrich-Alexander-Universität Erlangen-Nürnberg</div>
+        </div>
+        <div class="edu-meta">Erlangen, Germany<br>Apr 2026 – Present</div>
+      </div>
+      <div class="edu-card">
+        <div>
+          <div class="edu-degree">B.Sc. in Computer Science</div>
+          <div class="edu-spec">Thesis: Content-Based Recommendation System</div>
+          <div class="edu-school">SRM Institute of Science and Technology</div>
+        </div>
+        <div class="edu-meta">Chennai, India<br>Jun 2020 – May 2023</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Skills ═══ -->
+<section class="section alt" id="skills">
+  <div class="wrap">
+    <p class="section-label">Skills</p>
+    <h2 class="section-title">Technical toolkit</h2>
+    <div style="height:24px;"></div>
+    <div class="skills-list">
+      <div class="skill-line"><span class="skill-cat">Artificial Intelligence</span><span class="skill-items">Gen AI, Agentic AI, RAG, Responsible AI, AutoGen</span></div>
+      <div class="skill-line"><span class="skill-cat">Machine &amp; Deep Learning</span><span class="skill-items">PyTorch, Transformers (Hugging Face), Computer Vision, NLP, Recommender Systems</span></div>
+      <div class="skill-line"><span class="skill-cat">Data Analytics</span><span class="skill-items">SQL, Excel, Snowflake, Tableau, PySpark, Database Systems</span></div>
+      <div class="skill-line"><span class="skill-cat">CS Fundamentals &amp; Tools</span><span class="skill-items">Python, DSA, Git / GitHub, Docker, Cloud, Software Engineering</span></div>
+    </div>
+    <div style="margin-top:48px;">
+      <p class="section-label">Certifications</p>
+      <div class="skills-list" style="margin-top:14px;">
+        <div class="cert-line"><b>Azure AI Fundamentals (AI-900)</b><span class="cert-issuer">Microsoft</span></div>
+        <div class="cert-line"><b>Programming &amp; Data Science</b><span class="cert-issuer">IIT Madras</span></div>
+        <div class="cert-line"><b>Data Analytics Professional Certificate</b><span class="cert-issuer">Google — Coursera</span></div>
+        <div class="cert-line"><b>Supervised Machine Learning</b><span class="cert-issuer">Stanford — Coursera</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Research ═══ -->
+<section class="section" id="research">
+  <div class="wrap">
+    <p class="section-label">Research</p>
+    <h2 class="section-title">Published work</h2>
+    <div style="height:24px;"></div>
+    <div class="pub-card">
+      <span class="tag">NCECA 2023 · Published</span>
+      <h3 class="pub-title">Enhanced Customer Content-Based Recommendation System</h3>
+      <p class="pub-venue">Proceedings of the National Conference on Emerging Computer Applications (NCECA-2023) &nbsp;·&nbsp; <strong>DOI:</strong> 10.5281/zenodo.7965018</p>
+      <p style="font-size:15.5px;color:var(--text-secondary);line-height:1.75;max-width:700px;">
+        A deep learning approach to content-based filtering: dual neural networks (user network + movie network) learn 32-dimensional embeddings, combined via dot product to predict ratings. Trained with a custom cost function, L2 regularisation, and the Adam optimiser; evaluated on AUC, log loss, and recall against collaborative, hybrid, classification-based, and knowledge-based baselines; deployed logic follows a retrieval-and-ranking pipeline for efficiency on large catalogues.
+      </p>
+      <div class="pub-actions">
+        <a href="projects/recommender-demo.html" class="btn btn-primary" style="padding:9px 18px;font-size:13.5px;">Try the live demo</a>
+        <a href="https://github.com/thanushthrony/movie-recommender" target="_blank" rel="noopener" class="btn btn-ghost" style="padding:9px 18px;font-size:13.5px;">View the code</a>
+        <a href="https://doi.org/10.5281/zenodo.7965018" target="_blank" rel="noopener" class="btn btn-ghost" style="padding:9px 18px;font-size:13.5px;">Read the paper</a>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ═══ Contact ═══ -->
+<section class="contact-section" id="contact">
+  <div class="wrap contact-inner">
+    <p class="section-label">Contact</p>
+    <h2 class="section-title">Let's connect</h2>
+    <p class="section-desc">Looking for a Werkstudent in Data Science or ML? I'd be happy to hear from you.</p>
+    <div class="contact-links">
+      <a href="mailto:thanushraj23@gmail.com" class="contact-link">thanushraj23@gmail.com</a>
+      <a href="https://linkedin.com/in/thanush-raj/" target="_blank" rel="noopener" class="contact-link">LinkedIn</a>
+      <a href="https://github.com/thanushthrony" target="_blank" rel="noopener" class="contact-link">GitHub</a>
+      <a href="assets/Thanush_Raj_CV.pdf" download class="contact-link">Download CV</a>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><p>Thanush Raj Uma Babu · 2026 · Hosted on <a href="https://pages.github.com/" target="_blank" rel="noopener">GitHub Pages</a></p></div>
+</footer>
+
+<script>
+/* ── Nav ── */
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+document.querySelectorAll('.nav-links a').forEach(a=>a.addEventListener('click',()=>document.getElementById('navLinks').classList.remove('open')));
+
+/* ── Neural network widget ── */
+(function(){
+  const svgNS='http://www.w3.org/2000/svg';
+  const edgesG=document.getElementById('edges');
+  const layersG=document.getElementById('layers');
+  const CY=200, GAP=34;
+
+  const layers=[
+    ['u-in',  70, 6, 'x_u', 'user features',  'user'],
+    ['u-h1', 180, 5, '×256','dense · ReLU',   'user'],
+    ['u-h2', 280, 4, '×128','dense · ReLU',   'user'],
+    ['u-out',370, 3, 'v_u', '32-d embedding', 'user'],
+    ['m-out',550, 3, 'v_m', '32-d embedding', 'movie'],
+    ['m-h2', 640, 4, '×128','dense · ReLU',   'movie'],
+    ['m-h1', 740, 5, '×256','dense · ReLU',   'movie'],
+    ['m-in', 850, 6, 'x_m', 'movie features', 'movie'],
+  ];
+
+  const info={
+    'u-in':  ['x_u','User features (14)',"The user's average rating per genre — 14 numbers that describe taste. Rated Sci-Fi movies 4.5 on average? That's one of these inputs."],
+    'u-h1':  ['256','User dense layer (256 units)',"The first hidden layer. 256 ReLU units learn broad patterns: which combinations of genre preferences tend to go together."],
+    'u-h2':  ['128','User dense layer (128 units)',"The network compresses its understanding into 128 units, keeping only the strongest signals about this user."],
+    'u-out': ['v_u','User embedding (32-d)',"The output: one user's entire taste profile, summarised as just 32 numbers (L2-normalised) in a shared embedding space."],
+    'm-in':  ['x_m','Movie features (16)',"The movie's content profile — release year, average rating, and 14 genre flags. No other users needed: this is what makes the system content-based."],
+    'm-h1':  ['256','Movie dense layer (256 units)',"A mirror of the user tower: 256 ReLU units start turning raw content features into something comparable to taste."],
+    'm-h2':  ['128','Movie dense layer (128 units)',"Progressive compression: 128 units distill the movie's content toward the shared embedding space."],
+    'm-out': ['v_m','Movie embedding (32-d)',"The movie, summarised in the same 32-dimensional space as the user — so the two can be directly compared. These exact vectors power the live demo."],
+    'dot':   ['ŷ','Dot product → prediction',"One multiplication predicts the rating: ŷ = v_u · v_m. Trained by minimising squared error with L2 regularisation (to fight overfitting on sparse data), optimised with Adam. Bonus: distances between v_m vectors also give 'similar movies' for free."],
+  };
+
+  function nodePositions(x,count){
+    const ys=[]; const start=CY-((count-1)*GAP)/2;
+    for(let i=0;i<count;i++) ys.push(start+i*GAP);
+    return ys.map(y=>({x,y}));
+  }
+  const pos={};
+  layers.forEach(([id,x,n])=>pos[id]=nodePositions(x,n));
+
+  const chains=[['u-in','u-h1','u-h2','u-out'],['m-in','m-h1','m-h2','m-out']];
+  const edgeIndex={};
+  layers.forEach(([id])=>edgeIndex[id]=[]);
+  let ec=0;
+  chains.forEach(chain=>{
+    for(let i=0;i<chain.length-1;i++){
+      const a=chain[i],b=chain[i+1];
+      pos[a].forEach(p1=>pos[b].forEach(p2=>{
+        const l=document.createElementNS(svgNS,'line');
+        l.setAttribute('x1',p1.x);l.setAttribute('y1',p1.y);
+        l.setAttribute('x2',p2.x);l.setAttribute('y2',p2.y);
+        l.setAttribute('class','nn-edge'+((ec%7===0)?' flow':''));
+        edgesG.appendChild(l);
+        edgeIndex[a].push(l);edgeIndex[b].push(l);
+        ec++;
+      }));
+    }
+  });
+  ['u-out','m-out'].forEach(id=>{
+    pos[id].forEach(p=>{
+      const l=document.createElementNS(svgNS,'line');
+      l.setAttribute('x1',p.x);l.setAttribute('y1',p.y);
+      l.setAttribute('x2',460);l.setAttribute('y2',CY);
+      l.setAttribute('class','nn-edge flow');
+      edgesG.appendChild(l);
+      edgeIndex[id].push(l);
+    });
+  });
+
+  layers.forEach(([id,x,n,top,bottom,tower])=>{
+    const g=document.createElementNS(svgNS,'g');
+    g.setAttribute('class','nn-layer '+tower);
+    g.setAttribute('id','layer-'+id);
+    g.setAttribute('tabindex','0');
+    const hit=document.createElementNS(svgNS,'rect');
+    hit.setAttribute('x',x-40);hit.setAttribute('y',40);
+    hit.setAttribute('width',80);hit.setAttribute('height',320);
+    hit.setAttribute('fill','transparent');
+    g.appendChild(hit);
+    pos[id].forEach(p=>{
+      const c=document.createElementNS(svgNS,'circle');
+      c.setAttribute('cx',p.x);c.setAttribute('cy',p.y);c.setAttribute('r',11);
+      c.setAttribute('class','nn-node');
+      g.appendChild(c);
+    });
+    const t1=document.createElementNS(svgNS,'text');
+    t1.setAttribute('x',x);t1.setAttribute('y',CY-((n-1)*GAP)/2-26);
+    t1.setAttribute('class','nn-label');t1.setAttribute('font-weight','600');
+    t1.textContent=top; g.appendChild(t1);
+    const t2=document.createElementNS(svgNS,'text');
+    t2.setAttribute('x',x);t2.setAttribute('y',CY+((n-1)*GAP)/2+30);
+    t2.setAttribute('class','nn-label');
+    t2.textContent=bottom; g.appendChild(t2);
+    layersG.appendChild(g);
+  });
+
+  const iIcon=document.getElementById('nnInfoIcon');
+  const iTitle=document.getElementById('nnInfoTitle');
+  const iText=document.getElementById('nnInfoText');
+  const defaultInfo=['?','Explore the architecture',"Hover over any layer of either network to see its role. Two towers learn embeddings for users and movies separately — then a single dot product predicts the rating."];
+  let activeEl=null;
+
+  function setInfo(id){
+    const d=id?info[id]:null;
+    const [icon,title,text]=d||defaultInfo;
+    iIcon.textContent=icon;
+    iTitle.textContent=title;
+    iText.textContent=text;
+  }
+  function highlight(id,on){
+    (edgeIndex[id]||[]).forEach(l=>{
+      l.style.stroke=on?'#1A1A1A':'';
+      l.style.strokeWidth=on?'1.4':'';
+    });
+  }
+  function activate(g,id){
+    if(activeEl){activeEl.classList.remove('active');const prev=activeEl.dataset.lid;if(prev&&prev!=='dot')highlight(prev,false);}
+    activeEl=g;g.classList.add('active');g.dataset.lid=id;
+    if(id!=='dot')highlight(id,true);
+    setInfo(id);
+  }
+  function deactivate(){
+    if(activeEl){activeEl.classList.remove('active');const prev=activeEl.dataset.lid;if(prev&&prev!=='dot')highlight(prev,false);activeEl=null;}
+    setInfo(null);
+  }
+
+  layers.forEach(([id])=>{
+    const g=document.getElementById('layer-'+id);
+    g.addEventListener('mouseenter',()=>activate(g,id));
+    g.addEventListener('mouseleave',deactivate);
+    g.addEventListener('focus',()=>activate(g,id));
+    g.addEventListener('blur',deactivate);
+    g.addEventListener('click',e=>{e.preventDefault();activate(g,id);});
+  });
+  const dotG=document.getElementById('layer-dot');
+  dotG.addEventListener('mouseenter',()=>activate(dotG,'dot'));
+  dotG.addEventListener('mouseleave',deactivate);
+  dotG.addEventListener('focus',()=>activate(dotG,'dot'));
+  dotG.addEventListener('click',e=>{e.preventDefault();activate(dotG,'dot');});
+})();
+</script>
+</body>
+</html>

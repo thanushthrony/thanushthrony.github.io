@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Projects — Thanush Raj Uma Babu</title>
+<meta name="description" content="ML and data science projects by Thanush Raj Uma Babu — with live, working demos.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../assets/style.css">
+<style>
+.featured{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius-lg);overflow:hidden;margin-bottom:48px;position:relative;}
+.featured::before{content:'';position:absolute;top:0;left:0;right:0;height:3px;background:linear-gradient(90deg,var(--primary),var(--mint));z-index:2;}
+.featured-body{padding:40px;display:grid;grid-template-columns:1.3fr 1fr;gap:40px;align-items:center;}
+.featured h2{font-size:26px;font-weight:800;letter-spacing:-0.02em;margin:14px 0 12px;line-height:1.25;}
+.featured p{font-size:14.5px;color:var(--text-secondary);line-height:1.7;margin-bottom:22px;}
+.featured-tags{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:24px;}
+.featured-actions{display:flex;gap:12px;flex-wrap:wrap;}
+.featured-visual{background:linear-gradient(160deg,var(--hero-from),var(--hero-to));border-radius:var(--radius);padding:28px;position:relative;overflow:hidden;}
+.featured-visual::before{content:'';position:absolute;inset:0;background:radial-gradient(ellipse 300px 200px at 70% 30%, rgba(0,201,167,0.15) 0%, transparent 70%);}
+.fv-row{display:flex;justify-content:space-between;align-items:center;padding:11px 14px;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.08);border-radius:9px;margin-bottom:9px;position:relative;z-index:2;}
+.fv-title{font-size:13px;color:rgba(255,255,255,0.85);font-weight:500;}
+.fv-genre{font-family:var(--mono);font-size:10px;color:rgba(255,255,255,0.4);}
+.fv-score{font-family:var(--mono);font-size:12px;font-weight:600;color:#fff;}
+.fv-bar{height:4px;border-radius:4px;background:rgba(255,255,255,0.08);margin-top:6px;overflow:hidden;}
+.fv-fill{height:100%;border-radius:4px;background:#fff;}
+.fv-label{font-family:var(--mono);font-size:10px;letter-spacing:0.1em;text-transform:uppercase;color:rgba(255,255,255,0.35);margin-bottom:12px;position:relative;z-index:2;}
+.project-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px;}
+.project-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:30px;transition:border-color .2s, box-shadow .2s, transform .2s;position:relative;}
+a.project-card:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateY(-2px);}
+.project-title{font-size:18px;font-weight:700;margin:12px 0 8px;letter-spacing:-0.01em;}
+.project-desc{font-size:13.5px;color:var(--text-secondary);line-height:1.65;margin-bottom:16px;}
+.project-tech{display:flex;gap:6px;flex-wrap:wrap;}
+.tech-chip{font-family:var(--mono);font-size:11px;padding:3px 9px;border-radius:6px;background:var(--code-bg);color:var(--text-secondary);}
+.project-card.placeholder{border-style:dashed;opacity:0.7;}
+@media(max-width:820px){
+  .featured-body{grid-template-columns:1fr;}
+  .project-grid{grid-template-columns:1fr;}
+}
+</style>
+</head>
+<body>
+
+<nav class="nav dark-page" id="nav">
+  <div class="nav-inner">
+    <a href="../index.html" class="nav-logo">Thanush Raj</a>
+    <div class="nav-links" id="navLinks">
+      <a href="index.html" class="active">Projects</a>
+      <a href="../blog/index.html">Blog</a>
+      <a href="../notes/index.html">Paper Notes</a>
+      <a href="../opensource/index.html">Open Source</a>
+      <a href="../index.html#about">About</a>
+      <a href="../index.html#contact">Contact</a>
+      <a href="../index.html#contact" class="werkstudent-badge">Open to Werkstudent</a>
+    </div>
+    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+  </div>
+</nav>
+
+<header class="page-hero">
+  <div class="wrap">
+    <p class="page-hero-eyebrow">Projects</p>
+    <h1>Things I've built</h1>
+    <p>Working demos, not just descriptions. Every project here can be tried, inspected, or read about — problem, approach, and what I learned.</p>
+  </div>
+</header>
+
+<section class="section">
+  <div class="wrap">
+
+    <!-- Featured: Recommender -->
+    <div class="featured reveal">
+      <div class="featured-body">
+        <div>
+          <span class="tag tag-mint">Featured · Live Demo</span>
+          <h2>Enhanced Content-Based Movie Recommender</h2>
+          <div class="featured-tags">
+            <span class="tag tag-blue">Published — NCECA 2023</span>
+            <span class="tag tag-violet">Deep Learning</span>
+          </div>
+          <p>My Bachelor's thesis, published at NCECA 2023: a dual neural network learns 32-dimensional embeddings for users and movies from content features, predicting ratings with a single dot product. The demo runs the <strong>actual trained model</strong> — weights extracted from the original Keras network — entirely in your browser, on the 847-movie MovieLens catalogue it was trained on. Pick movies you like and watch profile-building, retrieval, and ranking happen live.</p>
+          <div class="featured-actions">
+            <a href="recommender-demo.html" class="btn btn-primary">Try the live demo →</a>
+            <a href="https://github.com/thanushthrony/movie-recommender" target="_blank" rel="noopener" class="btn btn-ghost">View code on GitHub</a>
+            <a href="https://doi.org/10.5281/zenodo.7965018" target="_blank" rel="noopener" class="btn btn-ghost">Read the paper</a>
+          </div>
+        </div>
+        <div class="featured-visual" aria-hidden="true">
+          <div class="fv-label">Model output · if you like Inception, The Martian & Interstellar</div>
+          <div class="fv-row"><div><div class="fv-title">3:10 to Yuma (2007)</div><div class="fv-genre">ACTION · CRIME · DRAMA</div></div><span class="fv-score">★ 4.62</span></div>
+          <div class="fv-bar"><div class="fv-fill" style="width:92%"></div></div>
+          <div class="fv-row" style="margin-top:12px;"><div><div class="fv-title">Apocalypto (2006)</div><div class="fv-genre">ADVENTURE · DRAMA · THRILLER</div></div><span class="fv-score">★ 4.61</span></div>
+          <div class="fv-bar"><div class="fv-fill" style="width:91%"></div></div>
+          <div class="fv-row" style="margin-top:12px;"><div><div class="fv-title">The Dark Knight (2008)</div><div class="fv-genre">ACTION · CRIME · DRAMA</div></div><span class="fv-score">★ 4.60</span></div>
+          <div class="fv-bar"><div class="fv-fill" style="width:91%"></div></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Other projects -->
+    <div class="project-grid">
+      <a href="../blog/deep-learning-guide.html" class="project-card reveal">
+        <span class="tag tag-blue">Interactive Guide</span>
+        <div class="project-title">Deep Learning Field Guide</div>
+        <p class="project-desc">A fully custom-designed interactive study guide covering 16 deep learning topics, with hand-built SVG diagrams, a visual course map, and a complete equation symbol glossary.</p>
+        <div class="project-tech"><span class="tech-chip">HTML/CSS/SVG</span><span class="tech-chip">Technical writing</span><span class="tech-chip">Education</span></div>
+      </a>
+
+      <div class="project-card placeholder reveal">
+        <span class="tag tag-muted">In Progress</span>
+        <div class="project-title">Machine Unlearning Experiments</div>
+        <p class="project-desc">Exploring whether unlearned knowledge truly disappears — reproducing membership inference evaluations and testing "benign relearning" on small models. Write-up coming.</p>
+        <div class="project-tech"><span class="tech-chip">PyTorch</span><span class="tech-chip">Privacy</span><span class="tech-chip">Fairness</span></div>
+      </div>
+    </div>
+
+  </div>
+</section>
+
+<footer>
+  <div class="wrap"><p>Built by Thanush Raj Uma Babu · 2026 · <a href="../index.html">← Back to home</a></p></div>
+</footer>
+
+<script>
+const nav=document.getElementById('nav');
+window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
+document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
+const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
+document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
+</script>
+</body>
+</html>
