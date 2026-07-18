@@ -3,6 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<link rel="icon" type="image/svg+xml" href="../favicon.svg">
 <title>Recommender Demo — Thanush Raj Uma Babu</title>
 <meta name="description" content="The actual trained dual-network recommender from my NCECA 2023 paper, running live in your browser.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -80,6 +81,19 @@
   .result-bar-wrap{width:100%;flex-basis:100%;}
 }
 </style>
+<style>
+:root{--bg:#fcfbf9;--surface:#fff;--primary:#B0603F;--primary-soft:rgba(176,96,63,0.12);--mint:#B0603F;--mint-soft:#f7ede7;--violet:#B0603F;--border:#e5e3de;--border-light:#efece6;--code-bg:#f4f1ec;--sans:Helvetica,Arial,sans-serif;}
+body{font-family:Helvetica,Arial,sans-serif;}
+.page-hero h1,.step-title,.section-title{font-family:Helvetica,Arial,sans-serif;}
+.nav,.nav.dark-page,.nav.scrolled{background:rgba(252,251,249,0.96);}
+.page-hero,.section.alt,.contact-section{background:var(--bg);}
+.page-hero-eyebrow{color:#B0603F;}
+.nav-links .werkstudent-badge{background:#B0603F;}
+.nav-links .werkstudent-badge:hover{background:#9a4f32;}
+.btn-primary,.btn-blue{background:#B0603F;border-color:#B0603F;}
+.btn-primary:hover,.btn-blue:hover{background:#9a4f32;}
+footer,.page-hero,body{background:var(--bg);}
+</style>
 </head>
 <body>
 
@@ -87,10 +101,8 @@
   <div class="nav-inner">
     <a href="../index.html" class="nav-logo">Thanush Raj</a>
     <div class="nav-links" id="navLinks">
-      <a href="index.html" class="active">Projects</a>
+      <a href="../projects/index.html" class="active">Projects</a>
       <a href="../blog/index.html">Blog</a>
-      <a href="../notes/index.html">Paper Notes</a>
-      <a href="../opensource/index.html">Open Source</a>
       <a href="../index.html#contact">Contact</a>
       <a href="../index.html#contact" class="werkstudent-badge">Open to Werkstudent</a>
     </div>
@@ -194,9 +206,9 @@
         </div>
       </div>
       <div style="margin-top:28px;display:flex;gap:12px;flex-wrap:wrap;">
-        <a href="https://github.com/thanushthrony/movie-recommender" target="_blank" rel="noopener" class="btn btn-blue">View code on GitHub →</a>
+        <a href="https://github.com/thanushthrony" target="_blank" rel="noopener" class="btn btn-blue">View code on GitHub →</a>
         <a href="https://doi.org/10.5281/zenodo.7965018" target="_blank" rel="noopener" class="btn btn-ghost">Read the full paper (DOI)</a>
-        <a href="index.html" class="btn btn-ghost">← All projects</a>
+        <a href="../projects/index.html" class="btn btn-ghost">← All projects</a>
       </div>
     </div>
 
@@ -330,7 +342,7 @@ async function runPipeline(){
   /* Stage 1: user profile -> trained user network */
   const s1=document.getElementById('stage1');
   s1.classList.remove('done');s1.classList.add('active');
-  s1.scrollIntoView({behavior:'smooth',block:'center'});
+  window.scrollTo({top:s1.getBoundingClientRect().top+window.scrollY-window.innerHeight/2+100,behavior:'smooth'});
   await sleep(750);
   // per-genre preference: liked movies count as 5★ ratings → genre average = 5.0 where present, 0 where unrated (training convention)
   const gpref=new Array(GENRES.length).fill(0);
@@ -383,7 +395,7 @@ async function runPipeline(){
   }
 
   await sleep(300);
-  results.scrollIntoView({behavior:'smooth',block:'center'});
+  window.scrollTo({top:results.getBoundingClientRect().top+window.scrollY-160,behavior:'smooth'});
   ranked.forEach((r,idx)=>{
     const m=D.movies[r.i];
     const nn=nearest(r.i);
