@@ -1,133 +1,81 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Blog — Thanush Raj Uma Babu</title>
-<meta name="description" content="Long-form guides on deep learning, machine learning, and recommender systems by Thanush Raj Uma Babu.">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Source+Serif+4:ital,opsz,wght@0,8..60,400;0,8..60,600&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="../assets/style.css">
+<link href="https://fonts.googleapis.com/css2?family=Source+Serif+4:ital,opsz,wght@0,8..60,400..700;1,8..60,400..700&display=swap" rel="stylesheet">
 <style>
-.series-block{margin-bottom:56px;}
-.series-header{display:flex;align-items:center;gap:14px;margin-bottom:20px;}
-.series-title{font-size:22px;font-weight:800;letter-spacing:-0.01em;}
-.series-desc{font-size:14px;color:var(--text-secondary);margin-bottom:22px;max-width:640px;}
-.post-list{display:grid;gap:14px;}
-.post-row{display:flex;align-items:center;gap:20px;background:var(--surface);border:1px solid var(--border);border-radius:var(--radius);padding:22px 26px;transition:border-color .2s, box-shadow .2s, transform .2s;}
-a.post-row:hover{border-color:var(--primary);box-shadow:var(--shadow);transform:translateX(4px);}
-.post-num{font-family:var(--mono);font-size:13px;font-weight:600;color:var(--primary);min-width:32px;}
-.post-title{font-size:16px;font-weight:700;letter-spacing:-0.01em;}
-.post-desc{font-size:13px;color:var(--text-secondary);margin-top:3px;line-height:1.55;}
-.post-meta{margin-left:auto;text-align:right;flex-shrink:0;font-family:var(--mono);font-size:12px;color:var(--text-secondary);}
-.post-row.coming{opacity:0.55;}
-.post-row.coming .post-num{color:var(--text-secondary);}
-.roadmap{background:var(--surface);border:1px dashed var(--border);border-radius:var(--radius-lg);padding:28px 32px;}
-.roadmap h3{font-size:16px;font-weight:700;margin-bottom:14px;}
-.roadmap-items{display:grid;grid-template-columns:1fr 1fr;gap:10px 28px;}
-.roadmap-item{display:flex;gap:10px;align-items:baseline;font-size:13.5px;color:var(--text-secondary);}
-.roadmap-item::before{content:'→';font-family:var(--mono);color:var(--mint);font-weight:600;}
-@media(max-width:768px){
-  .post-row{flex-wrap:wrap;}
-  .post-meta{margin-left:0;text-align:left;width:100%;}
-  .roadmap-items{grid-template-columns:1fr;}
-}
+body{margin:0;background:#fcfbf9;font-family:Helvetica,Arial,sans-serif;color:#111}
+a{color:inherit;text-decoration:none}
+a:hover{color:oklch(0.58 0.12 40)}
 </style>
+
 </head>
 <body>
+<div style="max-width:1080px;margin:0 auto;padding:0 48px">
 
-<nav class="nav dark-page" id="nav">
-  <div class="nav-inner">
-    <a href="../index.html" class="nav-logo">Thanush Raj</a>
-    <div class="nav-links" id="navLinks">
-      <a href="../projects/index.html">Projects</a>
-      <a href="index.html" class="active">Blog</a>
-      <a href="../notes/index.html">Paper Notes</a>
-      <a href="../opensource/index.html">Open Source</a>
-      <a href="../index.html#about">About</a>
-      <a href="../index.html#contact">Contact</a>
-      <a href="../index.html#contact" class="werkstudent-badge">Open to Werkstudent</a>
-    </div>
-    <button class="nav-toggle" id="navToggle" aria-label="Menu"><span></span><span></span><span></span></button>
+<div style="padding-top:28px;display:flex;justify-content:space-between;align-items:baseline">
+  <a href="../index.html" style="font-size:14px;font-weight:700;color:#111">Thanush Raj</a>
+  <div style="display:flex;gap:22px;font-size:12px;color:#555">
+    <a href="../projects/index.html">Projects</a>
+    <a href="index.html" style="color:#111;border-bottom:1px solid #111;padding-bottom:1px">Blog</a>
+    <a href="#notes">Paper Notes</a>
+    <a href="../projects/index.html#oss">Open Source</a>
+    <a href="../index.html#contact" style="color:oklch(0.58 0.12 40)">Contact</a>
   </div>
-</nav>
+</div>
 
-<header class="page-hero">
-  <div class="wrap">
-    <p class="page-hero-eyebrow">Blog</p>
-    <h1>Writing & guides</h1>
-    <p>Long-form series breaking down complex topics from my coursework and self-study — written the way I wish someone had explained them to me.</p>
+<div style="max-width:620px;margin:0 auto;padding:72px 0 8px">
+  <div style="font-size:12px;color:oklch(0.58 0.12 40);letter-spacing:.08em;text-transform:uppercase;margin-bottom:16px">Writing</div>
+  <h1 style="margin:0;font-family:'Source Serif 4',Georgia,serif;font-size:40px;line-height:1.15;font-weight:600;letter-spacing:-.01em">Deep learning, from the ground up.</h1>
+  <p style="margin:16px 0 0;font-family:'Source Serif 4',Georgia,serif;font-size:18px;line-height:1.65;color:#4a463f">Long-form explanations of how learning systems actually work — written while I learn them myself.</p>
+</div>
+
+<div data-screen-label="Blog posts" style="max-width:620px;margin:0 auto;padding:32px 0 8px">
+  <a href="../projects/recommender-demo.html" style="display:block;padding:24px 0;border-bottom:1px solid #e5e3de">
+    <div style="font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;line-height:1.3;color:#111">The model behind my paper — explained layer by layer</div>
+    <p style="margin:8px 0 0;font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;color:#6b6559">Two towers, one dot product: a walk through the NCECA 2023 dual-network architecture, with the live demo alongside.</p>
+    <div style="margin-top:10px;font-size:12px;color:#999">Interactive · 6 min read</div>
+  </a>
+  <a href="deep-learning-guide.html" style="display:block;padding:24px 0;border-bottom:1px solid #e5e3de">
+    <div style="font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;line-height:1.3;color:#111">Deep Learning Field Guide</div>
+    <p style="margin:8px 0 0;font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;color:#6b6559">16 deep learning topics with hand-built diagrams, a visual course map, and a full equation glossary.</p>
+    <div style="margin-top:10px;font-size:12px;color:#999">Interactive guide · 16 chapters</div>
+  </a>
+  <a href="#" style="display:block;padding:24px 0">
+    <div style="font-family:'Source Serif 4',Georgia,serif;font-size:24px;font-weight:600;line-height:1.3;color:#111">What 99.9% pipeline reliability actually takes</div>
+    <p style="margin:8px 0 0;font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;color:#6b6559">Lessons from 2.5 years of enterprise ETL — the boring practices that keep models fed.</p>
+    <div style="margin-top:10px;font-size:12px;color:#999">Essay · 7 min read</div>
+  </a>
+</div>
+
+<div id="notes" data-screen-label="Paper notes" style="max-width:620px;margin:0 auto;padding:40px 0 64px">
+  <div style="border-top:1px solid #e5e3de;padding-top:32px">
+    <div style="font-size:12px;color:#888;letter-spacing:.08em;text-transform:uppercase;margin-bottom:6px">Paper notes</div>
+    <p style="margin:0 0 8px;font-family:'Source Serif 4',Georgia,serif;font-size:16px;line-height:1.6;color:#4a463f">One core idea and one open question per paper. Updated weekly.</p>
+    <a href="../notes/index.html" style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 0;border-bottom:1px solid #e5e3de">
+      <span style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:#111">Attention Is All You Need</span>
+      <span style="font-size:12px;color:#999;flex:none">transformers</span>
+    </a>
+    <a href="../notes/index.html" style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 0;border-bottom:1px solid #e5e3de">
+      <span style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:#111">Machine Unlearning of Features and Labels</span>
+      <span style="font-size:12px;color:#999;flex:none">unlearning</span>
+    </a>
+    <a href="../notes/index.html" style="display:flex;justify-content:space-between;align-items:baseline;gap:20px;padding:14px 0">
+      <span style="font-family:'Source Serif 4',Georgia,serif;font-size:17px;font-weight:600;color:#111">Neural Collaborative Filtering</span>
+      <span style="font-size:12px;color:#999;flex:none">recsys</span>
+    </a>
   </div>
-</header>
+</div>
 
-<section class="section">
-  <div class="wrap">
+<div style="border-top:1px solid #e5e3de;padding:22px 0 28px;display:flex;justify-content:space-between;font-size:12px;color:#888">
+  <a href="mailto:thanushraj23@gmail.com">thanushraj23@gmail.com</a>
+  <div style="display:flex;gap:18px"><a href="https://github.com/thanushthrony" target="_blank">GitHub</a><a href="https://www.linkedin.com/" target="_blank">LinkedIn</a><a href="../assets/Thanush_Raj_CV.pdf" target="_blank">CV</a></div>
+</div>
 
-    <!-- Deep Learning A–Z -->
-    <div class="series-block">
-      <div class="series-header">
-        <span class="tag tag-blue">Series 01</span>
-        <h2 class="series-title">Deep Learning A–Z</h2>
-      </div>
-      <p class="series-desc">A beginner-friendly walk through the full FAU Deep Learning curriculum — 16 topics from feedforward networks to known operator learning, each explained in plain language with a complete equation glossary.</p>
-      <div class="post-list">
-        <a href="deep-learning-guide.html" class="post-row reveal">
-          <span class="post-num">01</span>
-          <div>
-            <div class="post-title">Deep Learning, From Your Own Lecture Notes</div>
-            <div class="post-desc">All 16 course topics in one field guide: what each actually means, the key methods inside it, and a plain-English glossary for every symbol.</div>
-          </div>
-          <div class="post-meta">16 topics<br>2026</div>
-        </a>
-      </div>
-    </div>
-
-    <!-- ML A–Z -->
-    <div class="series-block">
-      <div class="series-header">
-        <span class="tag tag-violet">Series 02</span>
-        <h2 class="series-title">Machine Learning A–Z</h2>
-      </div>
-      <p class="series-desc">From linear regression to ensemble methods — a practical guide through every core ML concept with code and intuition. In progress.</p>
-      <div class="post-list">
-        <div class="post-row coming reveal">
-          <span class="post-num">01</span>
-          <div>
-            <div class="post-title">Linear Models: Where All of ML Starts</div>
-            <div class="post-desc">Regression, classification, and why understanding a straight line teaches you 80% of what a neural network does.</div>
-          </div>
-          <div class="post-meta">Coming soon</div>
-        </div>
-      </div>
-    </div>
-
-    <!-- Roadmap -->
-    <div class="roadmap reveal">
-      <h3>On the writing roadmap</h3>
-      <div class="roadmap-items">
-        <div class="roadmap-item">Machine unlearning: can a model truly forget?</div>
-        <div class="roadmap-item">What 99.9% pipeline reliability taught me about ML data quality</div>
-        <div class="roadmap-item">Implementing GDPR's "right to be forgotten" in a recommender</div>
-        <div class="roadmap-item">From mainframes to ML: my career pivot, honestly</div>
-        <div class="roadmap-item">Mein Weg in die Datenwissenschaft (auf Deutsch 🇩🇪)</div>
-        <div class="roadmap-item">Building this site: static ML demos on GitHub Pages</div>
-      </div>
-    </div>
-
-  </div>
-</section>
-
-<footer>
-  <div class="wrap"><p>Built by Thanush Raj Uma Babu · 2026 · <a href="../index.html">← Back to home</a></p></div>
-</footer>
-
-<script>
-const nav=document.getElementById('nav');
-window.addEventListener('scroll',()=>nav.classList.toggle('scrolled',window.scrollY>40));
-document.getElementById('navToggle').addEventListener('click',()=>document.getElementById('navLinks').classList.toggle('open'));
-const obs=new IntersectionObserver(es=>es.forEach(e=>{if(e.isIntersecting)e.target.classList.add('visible');}),{threshold:0.1});
-document.querySelectorAll('.reveal').forEach(el=>obs.observe(el));
-</script>
+</div>
 </body>
 </html>
