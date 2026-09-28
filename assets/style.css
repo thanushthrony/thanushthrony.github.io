@@ -115,7 +115,8 @@ footer a{color:var(--text);font-weight:400;text-decoration:underline;text-underl
 }
 
 /* ─── Responsive nav ─── */
-@media(max-width:860px){
+.nav-logo,.nav-links a{white-space:nowrap;}
+@media(max-width:1020px){
   .nav-links{display:none;position:fixed;top:60px;left:0;right:0;background:#fff;flex-direction:column;padding:22px;gap:16px;border-bottom:1px solid var(--border);}
   .nav-links.open{display:flex;}
   .nav.scrolled .nav-links{background:#fff;}
